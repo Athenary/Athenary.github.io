@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Genetic Algorithm,Particle Swarm Optimization,Differential Evolution,连续优化问题,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="小贺今天有认真学习吗" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="摘要本文主要讲述的是解决十个无约束单目标优化问题的过程和结果，即求这些函数在给定区间内的最小值。首先说明了用遗传算法解决的思路和结果，但是其中有两个函数无法得到理想结果，于是使用粒子群算法重新计算，但是无法解决的问题反而变成了四个，于是又用差分演化算法尝试解决，结果发现遗传算法无法解决的问题差分演化也没办法解决，但是另外八个问题的结果精度上比遗传算法高了很多。最后经过反复尝试各种修改参数和代码调试">
+<meta name="keywords" content="Genetic Algorithm,Particle Swarm Optimization,Differential Evolution,连续优化问题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="三种智能优化算法解决十个无约束单目标优化问题">
+<meta property="og:url" content="http://hoyyy.com/2019/04/08/三种智能优化算法解决十个无约束单目标优化问题/index.html">
+<meta property="og:site_name" content="小贺今天有认真学习吗">
+<meta property="og:description" content="摘要本文主要讲述的是解决十个无约束单目标优化问题的过程和结果，即求这些函数在给定区间内的最小值。首先说明了用遗传算法解决的思路和结果，但是其中有两个函数无法得到理想结果，于是使用粒子群算法重新计算，但是无法解决的问题反而变成了四个，于是又用差分演化算法尝试解决，结果发现遗传算法无法解决的问题差分演化也没办法解决，但是另外八个问题的结果精度上比遗传算法高了很多。最后经过反复尝试各种修改参数和代码调试">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://hoyyy.com/2019/04/08/三种智能优化算法解决十个无约束单目标优化问题/Rastrigin-Math.png">
+<meta property="og:image" content="http://hoyyy.com/2019/04/08/三种智能优化算法解决十个无约束单目标优化问题/Ackley-Math.png">
+<meta property="og:image" content="http://hoyyy.com/2019/04/08/三种智能优化算法解决十个无约束单目标优化问题/Sphere-Math.png">
+<meta property="og:image" content="http://hoyyy.com/2019/04/08/三种智能优化算法解决十个无约束单目标优化问题/Rosenbrock-Math.png">
+<meta property="og:image" content="http://hoyyy.com/2019/04/08/三种智能优化算法解决十个无约束单目标优化问题/Beale-Math.png">
+<meta property="og:image" content="http://hoyyy.com/2019/04/08/三种智能优化算法解决十个无约束单目标优化问题/Schaffer-Math.png">
+<meta property="og:image" content="http://hoyyy.com/2019/04/08/三种智能优化算法解决十个无约束单目标优化问题/Styblinski-Math.png">
+<meta property="og:image" content="http://hoyyy.com/2019/04/08/三种智能优化算法解决十个无约束单目标优化问题/Bukin-Math.png">
+<meta property="og:image" content="http://hoyyy.com/2019/04/08/三种智能优化算法解决十个无约束单目标优化问题/Himmelblau%27s-Math.png">
+<meta property="og:image" content="http://hoyyy.com/2019/04/08/三种智能优化算法解决十个无约束单目标优化问题/Crossintray-Math.png">
+<meta property="og:image" content="http://hoyyy.com/2019/04/08/三种智能优化算法解决十个无约束单目标优化问题/data.jpg">
+<meta property="og:updated_time" content="2019-04-10T16:18:57.162Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="三种智能优化算法解决十个无约束单目标优化问题">
+<meta name="twitter:description" content="摘要本文主要讲述的是解决十个无约束单目标优化问题的过程和结果，即求这些函数在给定区间内的最小值。首先说明了用遗传算法解决的思路和结果，但是其中有两个函数无法得到理想结果，于是使用粒子群算法重新计算，但是无法解决的问题反而变成了四个，于是又用差分演化算法尝试解决，结果发现遗传算法无法解决的问题差分演化也没办法解决，但是另外八个问题的结果精度上比遗传算法高了很多。最后经过反复尝试各种修改参数和代码调试">
+<meta name="twitter:image" content="http://hoyyy.com/2019/04/08/三种智能优化算法解决十个无约束单目标优化问题/Rastrigin-Math.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://hoyyy.com/2019/04/08/三种智能优化算法解决十个无约束单目标优化问题/">
+
+
+
+
+
+  <title>三种智能优化算法解决十个无约束单目标优化问题 | 小贺今天有认真学习吗</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小贺今天有认真学习吗</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">昨日恍如隔世，少年砥砺向前</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://hoyyy.com/2019/04/08/三种智能优化算法解决十个无约束单目标优化问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Christopher Hoy">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小贺今天有认真学习吗">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">三种智能优化算法解决十个无约束单目标优化问题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-08T11:01:46+08:00">
+                2019-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Intelligent-Optimization-Algorithms/" itemprop="url" rel="index">
+                    <span itemprop="name">Intelligent Optimization Algorithms</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文主要讲述的是解决十个无约束单目标优化问题的过程和结果，即求这些函数在给定区间内的最小值。<br>首先说明了用遗传算法解决的思路和结果，但是其中有两个函数无法得到理想结果，于是使用粒子群算法重新计算，但是无法解决的问题反而变成了四个，于是又用差分演化算法尝试解决，结果发现遗传算法无法解决的问题差分演化也没办法解决，但是另外八个问题的结果精度上比遗传算法高了很多。最后经过反复尝试各种修改参数和代码调试，在把迭代次数从5000上调到50000之后，发现无法解决的两个函数才表现出一定的稳定收敛。</p>
+<h2 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h2><p>无约束单目标优化、连续优化、最小化、遗传算法、粒子群算法、差分演化算法</p>
+<h2 id="一-目标问题概述"><a href="#一-目标问题概述" class="headerlink" title="一  目标问题概述"></a>一  目标问题概述</h2><blockquote>
+<p>Wenyin Gong. 2019. Test functions for single-objective optimization. 1, 1, Article 1 (January 2019), 2 pages.</p>
+</blockquote>
+<h3 id="1-Rastrigin-Function"><a href="#1-Rastrigin-Function" class="headerlink" title="1. Rastrigin Function"></a>1. Rastrigin Function</h3><p><img src="Rastrigin-Math.png" alt></p>
+<h3 id="2-Ackley-Function"><a href="#2-Ackley-Function" class="headerlink" title="2. Ackley Function"></a>2. Ackley Function</h3><p><img src="Ackley-Math.png" alt></p>
+<h3 id="3-Sphere-Function"><a href="#3-Sphere-Function" class="headerlink" title="3. Sphere Function"></a>3. Sphere Function</h3><p><img src="Sphere-Math.png" alt></p>
+<h3 id="4-Rosenbrock-Function"><a href="#4-Rosenbrock-Function" class="headerlink" title="4. Rosenbrock Function"></a>4. Rosenbrock Function</h3><p><img src="Rosenbrock-Math.png" alt></p>
+<h3 id="5-Beale-Function"><a href="#5-Beale-Function" class="headerlink" title="5. Beale Function"></a>5. Beale Function</h3><p><img src="Beale-Math.png" alt></p>
+<h3 id="6-Schaffer-Function"><a href="#6-Schaffer-Function" class="headerlink" title="6. Schaffer Function"></a>6. Schaffer Function</h3><p><img src="Schaffer-Math.png" alt></p>
+<h3 id="7-Styblinski-Tang-Function"><a href="#7-Styblinski-Tang-Function" class="headerlink" title="7. Styblinski-Tang Function"></a>7. Styblinski-Tang Function</h3><p><img src="Styblinski-Math.png" alt></p>
+<h3 id="8-Bukin-Function"><a href="#8-Bukin-Function" class="headerlink" title="8. Bukin Function"></a>8. Bukin Function</h3><p><img src="Bukin-Math.png" alt></p>
+<h3 id="9-Himmelblaus-Function"><a href="#9-Himmelblaus-Function" class="headerlink" title="9. Himmelblaus Function"></a>9. Himmelblaus Function</h3><p><img src="Himmelblau&#39;s-Math.png" alt></p>
+<h3 id="10-Cross-in-tray-Function"><a href="#10-Cross-in-tray-Function" class="headerlink" title="10. Cross in tray Function"></a>10. Cross in tray Function</h3><p><img src="Crossintray-Math.png" alt></p>
+<h2 id="程序设计思路"><a href="#程序设计思路" class="headerlink" title="程序设计思路"></a>程序设计思路</h2><p>程序实现的思路主要是以下几个部分：</p>
+<ol>
+<li>输入部分（决定解决的问题）</li>
+<li>确定变量维度以及每个维度的上下界（根据选择的问题）</li>
+<li>初始化参数</li>
+<li>算法迭代</li>
+<li>输出结果</li>
+</ol>
+<p>为提高可读性，本文的程序运行结果数据以及代码统一放在文末，并会有对比分析。如果有兴趣可以前往参考。</p>
+<h2 id="遗传算法"><a href="#遗传算法" class="headerlink" title="遗传算法"></a>遗传算法</h2><p>用遗传算法（Genetic Algorithm）解决，程序算法迭代部分如下：</p>
+<ol>
+<li>选择。采用君主方案选择，即将结果排序后，选出最好的那一个个体，然后奇数位个体全部替换成这个最好的，偶数位个体全部与最好的个体进行交叉。</li>
+<li>变异。随机变异。</li>
+<li>新的种群和上一代种群合并，并排序，留下前一半的个体作为新的种群进行迭代。</li>
+<li>记录排序后种群的第一个个体的函数值</li>
+</ol>
+<p>迭代运行5000次，使用遗传算法能够确认八个函数的迭代结果会比较稳定，误差也在可接受范围内，但是Rosenbrock函数和Bukin函数无法稳定到可以推测出的最小值，考虑到可能是这种算法不适合解决这两个问题，所以我们尝试其他的优化算法。</p>
+<h2 id="粒子群算法"><a href="#粒子群算法" class="headerlink" title="粒子群算法"></a>粒子群算法</h2><p>由于Rosenbrock函数和Bukin函数使用遗传算法没法收敛，我们把初始化参数和算法迭代换成粒子群算法，其迭代的步骤如下：</p>
+<ol>
+<li>遍历每个个体</li>
+<li>对每个个体，如果其目标函数值要比历史最佳要好，更新这个个体历史最佳函数值，以及将这个个体的参数更新</li>
+<li>再对每个个体，根据其个体历史最佳函数值，决定是否更新全局最佳函数值以及更改全局最佳个体参数</li>
+<li>更新速度和位置</li>
+<li>边界处理</li>
+<li>记录这一代最佳函数值</li>
+</ol>
+<p>然后对十个函数进行了重新测试，迭代次数为5000次，测试结果有点出人意料，Rosenbrock函数多次出现了直接等于0.0的结果（即直接出了最小值，而不是接近），但是不稳定，多次测试还是会出现其他结果。Bukin函数则还是不收敛。而之前没有问题的Rastrigin函数和Styblinski-Tang函数却也无法收敛了。于是我们再尝试差分演化算法。</p>
+<h2 id="差分演化算法"><a href="#差分演化算法" class="headerlink" title="差分演化算法"></a>差分演化算法</h2><p>我们将初始化参数和算法迭代改成差分演化算法，其迭代步骤如下：</p>
+<ol>
+<li>变异算子随着迭代进行深入，每次都相应改变</li>
+<li>随机变异</li>
+<li>随机交叉</li>
+<li>边界处理</li>
+<li>选择</li>
+<li>记录最好的函数值</li>
+</ol>
+<p>差分演化算法迭代次5000次，遗传算法中没办法得到结果的Rosenbrock Function和Bukin Function还是没办法得到结果，其他的问题能很好的解决，并且和粒子群算法一样，精度极高，这个在文末数据分析里会对比讨论。</p>
+<h2 id="最终解决"><a href="#最终解决" class="headerlink" title="最终解决"></a>最终解决</h2><p>到了这个时候，我大概能猜到一点问题的所在了，通过差分算法，即使这两个函数的结果还是有部分波动，但是它们确实在一个贴近结果（0.0）的附近波动，所以方法应该是没错了，但是精度还是有问题。</p>
+<p>而我之前由于在个人电脑上运行，考虑到出结果的时间，同时也通过观察迭代过程图发现很早就能收敛到较低的范围，而越往后提升基本不大了，没想过用一个特别大的迭代数，因为要等的时间确实太久了。</p>
+<p>在我把迭代次数从5000次改成50000次之后，精度提高了一个数量级，这说明了对于优化算法迭代次数将很大程度决定最终的效果。但是通过分析数据，Rosenbrock函数和Bukin函数相对于其他函数，更难获得最小值，这和函数本身的性质以及算法都有关系，由于篇幅原因就不进行深入了。</p>
+<p>最后，很感谢《智能优化技术》这门课的老师，龚文引教授对我的启发以及帮助，学习完这门课收获很多！同时由于我本人水平有限，文中难免出现疏漏之处，还望谅解！</p>
+<h2 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h2><p>关于遗传算法、粒子群算法、差分演化算法在迭代次数为5000次时解决十个问题分别得到的结果对比：<br><img src="data.jpg" alt><br>对比可以发现，</p>
+<ol>
+<li>遗传算法和差分演化算法在解决Rosenbrock函数和Bukin函数的时候效果都不佳，但是差分演化算法还是表现的要比遗传算法要好。</li>
+<li>粒子群算法无法解决Rastrigin函数和Bukin函数。但是在解决Rosenbrock函数、Styblinski-Tang函数以及Himmelblau’s函数时出现了一个奇怪的现象，它会有时候收敛到最小值（另外两个算法很难解决的Rosenbrock函数在这里直接给出了精确值），但是有时候会收敛到另一个固定的值附近。</li>
+<li>在正常解决的函数里，粒子群算法和差分演化算法要比遗传算法精确很多很多，粒子群算法和差分演化算法在解决的函数里表现的精度很接近。</li>
+</ol>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><p>首先是模块funclib.py，这个模块用来实现十个优化问题，同时用只一个函数调用，提供输出菜单中显示的序号就行。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># funclib.py</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rastrigin_func</span><span class="params">(X)</span>:</span></span><br><span class="line">    A = <span class="number">10.0</span></span><br><span class="line">    sum = <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> xi <span class="keyword">in</span> X:</span><br><span class="line">        sum += (xi ** <span class="number">2</span> - A * cos(<span class="number">2</span> * pi * xi))</span><br><span class="line">    <span class="keyword">return</span> sum + A * len(X)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ackley_func</span><span class="params">(X)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">-20</span> * exp(<span class="number">-0.2</span> * ((<span class="number">0.5</span> * (X[<span class="number">0</span>] ** <span class="number">2</span> + X[<span class="number">1</span>] ** <span class="number">2</span>)) ** <span class="number">0.5</span>)) - exp(<span class="number">0.5</span> * (cos(<span class="number">2</span> * pi * X[<span class="number">0</span>]) + cos(<span class="number">2</span> * pi * X[<span class="number">1</span>]))) + e + <span class="number">20</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sphere_func</span><span class="params">(X)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> sum([xi ** <span class="number">2</span> <span class="keyword">for</span> xi <span class="keyword">in</span> X])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rosenbrock_func</span><span class="params">(X)</span>:</span></span><br><span class="line">    sum = <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(X) - <span class="number">1</span>):</span><br><span class="line">        sum += (<span class="number">100</span> * (X[i + <span class="number">1</span>] - X[i] ** <span class="number">2</span>) ** <span class="number">2</span> + (<span class="number">1</span> - X[i]) ** <span class="number">2</span>)</span><br><span class="line">    <span class="keyword">return</span> sum</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">beale_func</span><span class="params">(X)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> (<span class="number">1.5</span> - X[<span class="number">0</span>] + X[<span class="number">0</span>] * X[<span class="number">1</span>]) ** <span class="number">2</span> + (<span class="number">2.25</span> - X[<span class="number">0</span>] + X[<span class="number">0</span>] * (X[<span class="number">1</span>] ** <span class="number">2</span>)) ** <span class="number">2</span> + (<span class="number">2.625</span> - X[<span class="number">0</span>] + X[<span class="number">0</span>] * (X[<span class="number">1</span>] ** <span class="number">3</span>)) ** <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">schaffer_func</span><span class="params">(X)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0.5</span> + (cos(sin(abs(X[<span class="number">0</span>] ** <span class="number">2</span> - X[<span class="number">1</span>] ** <span class="number">2</span>))) ** <span class="number">2</span> - <span class="number">0.5</span>) / (<span class="number">1</span> + <span class="number">0.001</span> * (X[<span class="number">0</span>] ** <span class="number">2</span> + X[<span class="number">1</span>] ** <span class="number">2</span>)) ** <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">styblinski_tang_func</span><span class="params">(X)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> sum([(xi ** <span class="number">4</span> - <span class="number">16</span> * (xi ** <span class="number">2</span>) + <span class="number">5</span> * xi) / <span class="number">2</span> <span class="keyword">for</span> xi <span class="keyword">in</span> X])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bukin_func</span><span class="params">(X)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">100</span> * (abs(X[<span class="number">1</span>] - <span class="number">0.01</span> * (X[<span class="number">0</span>] ** <span class="number">2</span>)) ** <span class="number">0.5</span>) + <span class="number">0.01</span> * abs(X[<span class="number">0</span>] + <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">himmelblaus_func</span><span class="params">(X)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> (X[<span class="number">0</span>] ** <span class="number">2</span> + X[<span class="number">1</span>] - <span class="number">11</span>) ** <span class="number">2</span> + (X[<span class="number">0</span>] + X[<span class="number">1</span>] ** <span class="number">2</span> - <span class="number">7</span>) ** <span class="number">2</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">corssintray_func</span><span class="params">(X)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">-0.0001</span> * ((abs(sin(X[<span class="number">0</span>]) * sin(X[<span class="number">1</span>]) * exp(abs(<span class="number">100</span> - (X[<span class="number">0</span>] ** <span class="number">2</span> + X[<span class="number">1</span>] ** <span class="number">2</span>) ** <span class="number">0.5</span> / pi))) + <span class="number">1</span>) ** <span class="number">0.1</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">obj_func</span><span class="params">(func_i, X)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> func_i == <span class="string">'0'</span>:</span><br><span class="line">        <span class="keyword">return</span> rastrigin_func(X)</span><br><span class="line">    <span class="keyword">elif</span> func_i == <span class="string">'1'</span>:</span><br><span class="line">        <span class="keyword">return</span> ackley_func(X)</span><br><span class="line">    <span class="keyword">elif</span> func_i == <span class="string">'2'</span>:</span><br><span class="line">        <span class="keyword">return</span> sphere_func(X)</span><br><span class="line">    <span class="keyword">elif</span> func_i == <span class="string">'3'</span>:</span><br><span class="line">        <span class="keyword">return</span> rosenbrock_func(X)</span><br><span class="line">    <span class="keyword">elif</span> func_i == <span class="string">'4'</span>:</span><br><span class="line">        <span class="keyword">return</span> beale_func(X)</span><br><span class="line">    <span class="keyword">elif</span> func_i == <span class="string">'5'</span>:</span><br><span class="line">        <span class="keyword">return</span> schaffer_func(X)</span><br><span class="line">    <span class="keyword">elif</span> func_i == <span class="string">'6'</span>:</span><br><span class="line">        <span class="keyword">return</span> styblinski_tang_func(X)</span><br><span class="line">    <span class="keyword">elif</span> func_i == <span class="string">'7'</span>:</span><br><span class="line">        <span class="keyword">return</span> bukin_func(X)</span><br><span class="line">    <span class="keyword">elif</span> func_i == <span class="string">'8'</span>:</span><br><span class="line">        <span class="keyword">return</span> himmelblaus_func(X)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> corssintray_func(X)</span><br></pre></td></tr></table></figure></p>
+<p>每个算法文件中需要导入的其他模版。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="comment"># 通过obj_func来调用函数，提供对应函数序号和自变量数组作为参数</span></span><br><span class="line"><span class="keyword">from</span> funclib <span class="keyword">import</span> obj_func</span><br><span class="line"><span class="comment"># 绘图库</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure></p>
+<p>程序的输入部分，由用户选择要测试哪个函数。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 注意从0开始</span></span><br><span class="line">message = <span class="string">"Choose the index of function to calculate:\n \</span></span><br><span class="line"><span class="string">0. Rastrigin function\n \</span></span><br><span class="line"><span class="string">1. Ackley function\n \</span></span><br><span class="line"><span class="string">2. Sphere function\n \</span></span><br><span class="line"><span class="string">3. Rosenbrock function\n \</span></span><br><span class="line"><span class="string">4. Beale function\n \</span></span><br><span class="line"><span class="string">5. Schaffer function\n \</span></span><br><span class="line"><span class="string">6. Styblinski_tang function\n \</span></span><br><span class="line"><span class="string">7. Bukin function\n \</span></span><br><span class="line"><span class="string">8. Himmelblaus function\n \</span></span><br><span class="line"><span class="string">9. Cross_in_tray function\n"</span></span><br><span class="line"></span><br><span class="line">func_to_cal = input(message)</span><br><span class="line"><span class="keyword">while</span> func_to_cal &gt; <span class="string">'9'</span> <span class="keyword">and</span> func_to_cal &lt; <span class="string">'0'</span>:</span><br><span class="line">    func_to_cal = input(message)</span><br></pre></td></tr></table></figure></p>
+<p>根据前面的用户选的函数，设定自变量的维度和上下限。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#解的维度</span></span><br><span class="line">pop_dim = <span class="number">2</span></span><br><span class="line"><span class="keyword">if</span> func_to_cal <span class="keyword">in</span> <span class="string">"0236"</span>:</span><br><span class="line">    pop_dim = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#解空间的上下界</span></span><br><span class="line"><span class="comment">#如果是2维则有x，y之分</span></span><br><span class="line"><span class="comment">#x_top, x_bottom, y_top, y_bottom</span></span><br><span class="line"><span class="comment">#如果是n维则只有一个上下界</span></span><br><span class="line"><span class="comment">#xi_top, xi_bottom</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> func_to_cal <span class="keyword">in</span> <span class="string">"0236"</span>:</span><br><span class="line">    <span class="keyword">if</span> func_to_cal == <span class="string">'0'</span>:</span><br><span class="line">        xi_top = <span class="number">5.12</span></span><br><span class="line">        xi_bottom = <span class="number">-5.12</span></span><br><span class="line">    <span class="keyword">elif</span> func_to_cal == <span class="string">'2'</span>:</span><br><span class="line">        xi_top = <span class="number">100</span></span><br><span class="line">        xi_bottom = <span class="number">-100</span></span><br><span class="line">    <span class="keyword">elif</span> func_to_cal == <span class="string">'3'</span>:</span><br><span class="line">        xi_top = <span class="number">30</span></span><br><span class="line">        xi_bottom = <span class="number">-30</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        xi_top = <span class="number">5</span></span><br><span class="line">        xi_bottom = <span class="number">-5</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">if</span> func_to_cal == <span class="string">'1'</span>:</span><br><span class="line">        x_top = y_top = <span class="number">5</span></span><br><span class="line">        x_bottom = y_bottom = <span class="number">-5</span></span><br><span class="line">    <span class="keyword">elif</span> func_to_cal == <span class="string">'4'</span>:</span><br><span class="line">        x_top = y_top = <span class="number">4.5</span></span><br><span class="line">        x_bottom = y_bottom = <span class="number">-4.5</span></span><br><span class="line">    <span class="keyword">elif</span> func_to_cal == <span class="string">'5'</span>:</span><br><span class="line">        x_top = y_top = <span class="number">100</span></span><br><span class="line">        x_bottom = y_bottom = <span class="number">-100</span></span><br><span class="line">    <span class="keyword">elif</span> func_to_cal == <span class="string">'7'</span>:</span><br><span class="line">        x_top = <span class="number">-5</span></span><br><span class="line">        x_bottom = <span class="number">-15</span></span><br><span class="line">        y_top = <span class="number">3</span></span><br><span class="line">        y_bottom = <span class="number">-3</span></span><br><span class="line">    <span class="keyword">elif</span> func_to_cal == <span class="string">'8'</span>:</span><br><span class="line">        x_top = y_top = <span class="number">5</span></span><br><span class="line">        x_bottom = y_bottom = <span class="number">-5</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        x_top = y_top = <span class="number">10</span></span><br><span class="line">        x_bottom = y_bottom = <span class="number">-10</span></span><br></pre></td></tr></table></figure></p>
+<p>遗传算法的参数初始化。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 种群规模</span></span><br><span class="line">pop_num = <span class="number">100</span></span><br><span class="line"><span class="comment"># 随机初始化种群</span></span><br><span class="line">pop = np.random.rand(pop_num, pop_dim)</span><br><span class="line"><span class="comment"># 选择、交叉、变异后的新种群</span></span><br><span class="line">new_pop = np.random.rand(pop_num, pop_dim)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 确定维度</span></span><br><span class="line"><span class="keyword">if</span> pop_dim == <span class="number">2</span> :</span><br><span class="line">    pop[:,<span class="number">0</span>] *= (x_top - x_bottom)</span><br><span class="line">    pop[:,<span class="number">0</span>] += np.repeat(np.array([x_bottom]), pop_num, axis=<span class="number">0</span>)</span><br><span class="line">    pop[:,<span class="number">1</span>] *= (y_top - y_bottom)</span><br><span class="line">    pop[:,<span class="number">1</span>] += np.repeat(np.array([y_bottom]), pop_num, axis=<span class="number">0</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, pop_dim):</span><br><span class="line">        pop[:,i] *= (xi_top - xi_bottom)</span><br><span class="line">        pop[:,i] += np.repeat(np.array([xi_bottom]), pop_num, axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 交叉概率</span></span><br><span class="line">porb_cro = <span class="number">0.8</span></span><br><span class="line"><span class="comment"># 变异概率</span></span><br><span class="line">prob_mut = <span class="number">0.1</span></span><br><span class="line"><span class="comment"># 迭代次数</span></span><br><span class="line">iterations = <span class="number">5000</span></span><br><span class="line"><span class="comment"># 历代最优</span></span><br><span class="line">trace = np.zeros(iterations, dtype=float)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算初代的结果</span></span><br><span class="line">results = np.zeros(pop_num, dtype=float)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, pop_num):</span><br><span class="line">    results[i] = obj_func(func_to_cal, pop[i])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 由于是求最小值，所以升序排列结果，并记录原来的索引位置</span></span><br><span class="line">sorted_indices = np.argsort(results)</span><br><span class="line">results.sort()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据目标函数值对种群进行排序，按照函数值升序排列</span></span><br><span class="line">sorted_pop = np.zeros((pop_num, pop_dim), dtype=float)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, pop_num):</span><br><span class="line">    sorted_pop[i] = pop[sorted_indices[i]].copy()</span><br><span class="line"></span><br><span class="line">pop = sorted_pop.copy()</span><br></pre></td></tr></table></figure></p>
+<p>遗传算法的迭代过程。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#开始迭代遗传</span></span><br><span class="line"><span class="keyword">for</span> iter <span class="keyword">in</span> range(<span class="number">0</span>, iterations):</span><br><span class="line">    <span class="comment">#君主方案进行选择</span></span><br><span class="line">    emper = pop[<span class="number">0</span>].copy()</span><br><span class="line">    <span class="comment">#每次交叉点的个数</span></span><br><span class="line">    noPoint = round(pop_dim * porb_cro)</span><br><span class="line">    <span class="comment">#交叉基因的位置</span></span><br><span class="line">    poPoint = np.random.randint(<span class="number">0</span>, pop_dim, size=(int(pop_num / <span class="number">2</span>), noPoint))</span><br><span class="line">    <span class="comment">#交叉操作</span></span><br><span class="line">    new_pop = pop.copy()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, int(pop_num / <span class="number">2</span>)):</span><br><span class="line">        new_pop[<span class="number">2</span> * i] = emper.copy()</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>, noPoint):</span><br><span class="line">            new_pop[<span class="number">2</span> * i][poPoint[i][j]] = new_pop[<span class="number">2</span> * i + <span class="number">1</span>][poPoint[i][j]]</span><br><span class="line">            new_pop[<span class="number">2</span> * i + <span class="number">1</span>][poPoint[i][j]] = emper[poPoint[i][j]]</span><br><span class="line"></span><br><span class="line">    <span class="comment">#变异操作</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, pop_num):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>, pop_dim):</span><br><span class="line">            choice = np.random.rand()</span><br><span class="line">            <span class="keyword">if</span> choice &lt; prob_mut:</span><br><span class="line">                <span class="keyword">if</span> pop_dim == <span class="number">2</span>:</span><br><span class="line">                    <span class="keyword">if</span> j == <span class="number">0</span>:</span><br><span class="line">                        new_pop[i][j] = np.random.rand() * (x_top - x_bottom) + x_bottom</span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        new_pop[i][j] = np.random.rand() * (y_top - y_bottom) + y_bottom</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    new_pop[i][j] = np.random.rand() * (xi_top - xi_bottom) + xi_bottom</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#子种群按照函数值升序排列</span></span><br><span class="line">    new_results = np.zeros(pop_num, dtype=float)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, pop_num):</span><br><span class="line">        new_results[i] = obj_func(func_to_cal, new_pop[i])</span><br><span class="line">    </span><br><span class="line">    new_sorted_indices = np.argsort(new_results)</span><br><span class="line">    new_results.sort()</span><br><span class="line"></span><br><span class="line">    <span class="comment">#获得新的按照函数值升序的种群</span></span><br><span class="line">    new_sorted_pop = np.zeros((pop_num, pop_dim), dtype=float)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, pop_num):</span><br><span class="line">        new_sorted_pop[i] = new_pop[new_sorted_indices[i]].copy()</span><br><span class="line">    new_pop = new_sorted_pop.copy()</span><br><span class="line">   </span><br><span class="line">    <span class="comment">#合并两代种群并排序</span></span><br><span class="line">    <span class="comment">#函数值合并</span></span><br><span class="line">    total_results = np.hstack((results, new_results))</span><br><span class="line">    <span class="comment">#种群合并</span></span><br><span class="line">    total_pop = np.vstack((pop, new_pop))</span><br><span class="line">    <span class="comment">#获得合并后的函数值升序索引列表</span></span><br><span class="line">    total_sorted_indives = np.argsort(total_results)</span><br><span class="line">    total_results.sort()</span><br><span class="line">    <span class="comment">#将合并后的种群按升序排列</span></span><br><span class="line">    sorted_total_pop = np.zeros((pop_num * <span class="number">2</span>, pop_dim), dtype=float)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">2</span> * pop_num):</span><br><span class="line">        sorted_total_pop[i] = total_pop[total_sorted_indives[i]].copy()</span><br><span class="line">    total_pop = sorted_total_pop.copy()</span><br><span class="line">	</span><br><span class="line">	<span class="comment"># 获得前一半函数值和种群</span></span><br><span class="line">    results = total_results[<span class="number">0</span>:pop_num].copy()</span><br><span class="line">    pop = total_pop[<span class="number">0</span>:pop_num].copy()</span><br><span class="line">    </span><br><span class="line">	<span class="comment"># 记录本代最佳的函数值</span></span><br><span class="line">    trace[iter] = results[<span class="number">0</span>]</span><br></pre></td></tr></table></figure></p>
+<p>粒子群算法的参数初始化。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 种群数量</span></span><br><span class="line">pop_num = <span class="number">100</span></span><br><span class="line"><span class="comment"># 迭代次数</span></span><br><span class="line">iterations = <span class="number">50000</span></span><br><span class="line"><span class="comment"># 两个速度更新参数</span></span><br><span class="line">c1 = <span class="number">1.5</span></span><br><span class="line">c2 = <span class="number">1.5</span></span><br><span class="line"><span class="comment"># 速度变化权重</span></span><br><span class="line">w = <span class="number">0.8</span></span><br><span class="line"><span class="comment"># 根据维度设置速度上限和下限</span></span><br><span class="line"><span class="keyword">if</span> pop_dim == <span class="number">2</span>:</span><br><span class="line">    v1_max = x_top / <span class="number">2.0</span></span><br><span class="line">    v1_min = x_bottom / <span class="number">2.0</span></span><br><span class="line">    v2_max = y_top / <span class="number">2.0</span></span><br><span class="line">    v2_min = y_bottom / <span class="number">2.0</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    v_max = xi_top / <span class="number">2.0</span></span><br><span class="line">    v_min = xi_bottom / <span class="number">2.0</span></span><br><span class="line"><span class="comment"># 随机初始化种群和其对应速度</span></span><br><span class="line">pop = np.random.rand(pop_num, pop_dim)</span><br><span class="line">pop_v = np.random.rand(pop_num, pop_dim)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> pop_dim == <span class="number">2</span> :</span><br><span class="line">    pop[:,<span class="number">0</span>] *= (x_top - x_bottom)</span><br><span class="line">    pop[:,<span class="number">0</span>] += np.repeat(np.array([x_bottom]), pop_num, axis=<span class="number">0</span>)</span><br><span class="line">    pop[:,<span class="number">1</span>] *= (y_top - y_bottom)</span><br><span class="line">    pop[:,<span class="number">1</span>] += np.repeat(np.array([y_bottom]), pop_num, axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    pop_v[:,<span class="number">0</span>] *= (v1_max - v1_min)</span><br><span class="line">    pop_v[:,<span class="number">0</span>] += np.repeat(np.array([v1_min]), pop_num, axis=<span class="number">0</span>)</span><br><span class="line">    pop_v[:,<span class="number">1</span>] *= (v2_max - v2_min)</span><br><span class="line">    pop_v[:,<span class="number">1</span>] += np.repeat(np.array([v2_min]), pop_num, axis=<span class="number">0</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, pop_dim):</span><br><span class="line">        pop[:,i] *= (xi_top - xi_bottom)</span><br><span class="line">        pop[:,i] += np.repeat(np.array([xi_bottom]), pop_num, axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">        pop_v[:,i] *= (v_max - v_min)</span><br><span class="line">        pop_v[:,i] += np.repeat(np.array([v_min]), pop_num, axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化个体最优位置和最优值</span></span><br><span class="line">pop_best = pop.copy()</span><br><span class="line">pop_best_obj = np.zeros(pop_num)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, pop_num):</span><br><span class="line">    pop_best_obj[i] = obj_func(func_to_cal, pop[i])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化全局最优位置和最优值</span></span><br><span class="line">glo_indi_best = pop[<span class="number">0</span>].copy()</span><br><span class="line">glo_indi_best_obj = np.Infinity</span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据初代随机值第一次更新全局最佳位置和函数值</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, pop_num):</span><br><span class="line">    <span class="keyword">if</span> pop_best_obj[i] &lt; glo_indi_best_obj:</span><br><span class="line">        glo_indi_best = pop_best[i].copy()</span><br><span class="line">        glo_indi_best_obj = pop_best_obj[i]</span><br><span class="line"><span class="comment"># 用来记录历代最佳</span></span><br><span class="line">trace = np.zeros(iterations)</span><br></pre></td></tr></table></figure></p>
+<p>粒子群算法的迭代过程。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开始迭代</span></span><br><span class="line"><span class="keyword">for</span> iter <span class="keyword">in</span> range(<span class="number">0</span>, iterations):</span><br><span class="line">    <span class="keyword">for</span> indi <span class="keyword">in</span> range(<span class="number">0</span>, pop_num):</span><br><span class="line">        <span class="comment"># 更新个体最优位置和最优值</span></span><br><span class="line">        <span class="keyword">if</span> obj_func(func_to_cal, pop[indi]) &lt; obj_func(func_to_cal, pop_best[indi]):</span><br><span class="line">            pop_best[indi] = pop[indi].copy()</span><br><span class="line">            pop_best_obj[indi] = obj_func(func_to_cal, pop[indi])</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 更新全局最优位置和最优值</span></span><br><span class="line">        <span class="keyword">if</span> pop_best_obj[indi] &lt; glo_indi_best_obj:</span><br><span class="line">            glo_indi_best = pop_best[indi].copy()</span><br><span class="line">            glo_indi_best_obj = pop_best_obj[indi]</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 更新位置和速度</span></span><br><span class="line">        pop_v[indi] = w * pop_v[indi]</span><br><span class="line">        pop_v[indi] += c1 * np.random.rand() * (pop_best[indi] - pop[indi])</span><br><span class="line">        pop_v[indi] += c2 * np.random.rand() * (glo_indi_best - pop[indi])</span><br><span class="line">        </span><br><span class="line">        pop[indi] = pop[indi] + pop_v[indi]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 边界处理</span></span><br><span class="line">        <span class="keyword">if</span> pop_dim == <span class="number">10</span>:</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, pop_dim):</span><br><span class="line">                <span class="keyword">if</span> pop_v[indi][i] &gt; v_max <span class="keyword">or</span> pop_v[indi][i] &lt; v_min:</span><br><span class="line">                    pop_v[indi][i] = np.random.rand() * (v_max - v_min) + v_min</span><br><span class="line">                <span class="keyword">if</span> pop[indi][i] &gt; xi_top <span class="keyword">or</span> pop[indi][i] &lt; xi_bottom:</span><br><span class="line">                    pop[indi][i] = np.random.rand() * (xi_top - xi_bottom) + xi_bottom</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> pop_v[indi][<span class="number">0</span>] &gt; v1_max <span class="keyword">or</span> pop_v[indi][<span class="number">0</span>] &lt; v1_min:</span><br><span class="line">                pop_v[indi][<span class="number">0</span>] = np.random.rand() * (v1_max - v1_min) + v1_min</span><br><span class="line">            <span class="keyword">if</span> pop[indi][<span class="number">0</span>] &gt; x_top <span class="keyword">or</span> pop[indi][<span class="number">0</span>] &lt; x_bottom:</span><br><span class="line">                pop[indi][<span class="number">0</span>] = np.random.rand() * (x_top - x_bottom) + x_bottom</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> pop_v[indi][<span class="number">1</span>] &gt; v2_max <span class="keyword">or</span> pop_v[indi][<span class="number">1</span>] &lt; v2_min:</span><br><span class="line">                pop_v[indi][<span class="number">1</span>] = np.random.rand() * (v2_max - v2_min) + v2_min</span><br><span class="line">            <span class="keyword">if</span> pop[indi][<span class="number">1</span>] &gt; y_top <span class="keyword">or</span> pop[indi][<span class="number">1</span>] &lt; y_bottom:</span><br><span class="line">                pop[indi][<span class="number">1</span>] = np.random.rand() * (y_top - y_bottom) + y_bottom</span><br><span class="line">    </span><br><span class="line">	<span class="comment"># 记录本代最佳函数值</span></span><br><span class="line">    trace[iter] = glo_indi_best_obj</span><br></pre></td></tr></table></figure></p>
+<p>差分演化算法的参数初始化。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 种群数量</span></span><br><span class="line">pop_num = <span class="number">100</span></span><br><span class="line"><span class="comment"># 迭代次数</span></span><br><span class="line">iterations = <span class="number">50000</span></span><br><span class="line"><span class="comment"># 初始变异算子</span></span><br><span class="line">mut_coe_0 = <span class="number">0.4</span></span><br><span class="line"><span class="comment"># 交叉算子</span></span><br><span class="line">cro_coe = <span class="number">0.2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 原始种群</span></span><br><span class="line">raw_pop = np.random.rand(pop_num, pop_dim)</span><br><span class="line"><span class="comment"># 变异种群</span></span><br><span class="line">mut_pop = np.zeros((pop_num, pop_dim))</span><br><span class="line"><span class="comment"># 选择种群</span></span><br><span class="line">cho_pop = np.zeros((pop_num, pop_dim))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 原始种群赋值</span></span><br><span class="line"><span class="keyword">if</span> pop_dim == <span class="number">2</span> :</span><br><span class="line">    raw_pop[:,<span class="number">0</span>] *= (x_top - x_bottom)</span><br><span class="line">    raw_pop[:,<span class="number">0</span>] += np.repeat(np.array([x_bottom]), pop_num, axis=<span class="number">0</span>)</span><br><span class="line">    raw_pop[:,<span class="number">1</span>] *= (y_top - y_bottom)</span><br><span class="line">    raw_pop[:,<span class="number">1</span>] += np.repeat(np.array([y_bottom]), pop_num, axis=<span class="number">0</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, pop_dim):</span><br><span class="line">        raw_pop[:,i] *= (xi_top - xi_bottom)</span><br><span class="line">        raw_pop[:,i] += np.repeat(np.array([xi_bottom]), pop_num, axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 群体的每个个体的初始目标函数值</span></span><br><span class="line">objs = np.zeros(pop_num)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, pop_num):</span><br><span class="line">    objs[i] = obj_func(func_to_cal, raw_pop[i])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 每一代的最佳函数值(包含初始的一代)</span></span><br><span class="line">trace = np.zeros((iterations + <span class="number">1</span>))</span><br><span class="line"><span class="comment"># 初始一代最佳函数值</span></span><br><span class="line">trace[<span class="number">0</span>] = objs.min()</span><br></pre></td></tr></table></figure></p>
+<p>差分演化算法的迭代过程。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 迭代</span></span><br><span class="line"><span class="keyword">for</span> iter <span class="keyword">in</span> range(<span class="number">0</span>, iterations):</span><br><span class="line">    <span class="comment"># 变异</span></span><br><span class="line">    <span class="comment"># 自适应变异算子</span></span><br><span class="line">    lamda = exp(<span class="number">1.0</span> - float(iterations) / (float(iterations) - iter))</span><br><span class="line">    mut_coe = mut_coe_0 * (<span class="number">2</span> ** lamda)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> indi <span class="keyword">in</span> range(<span class="number">0</span>, pop_num):</span><br><span class="line">        r1 = np.random.randint(<span class="number">0</span>, pop_num)</span><br><span class="line">        <span class="keyword">while</span> r1 == indi:</span><br><span class="line">            <span class="comment"># 确保不是当前个体</span></span><br><span class="line">            r1 = np.random.randint(<span class="number">0</span>, pop_num)</span><br><span class="line">        r2 = np.random.randint(<span class="number">0</span>, pop_num)</span><br><span class="line">        <span class="keyword">while</span> r2 == indi <span class="keyword">or</span> r2 == r1:</span><br><span class="line">            <span class="comment"># 确保不是当前个体且不与r1相等</span></span><br><span class="line">            r2 = np.random.randint(<span class="number">0</span>, pop_num)</span><br><span class="line">        r3 = np.random.randint(<span class="number">0</span>, pop_num)</span><br><span class="line">        <span class="keyword">while</span> r3 == indi <span class="keyword">or</span> r3 == r1 <span class="keyword">or</span> r3 == r2:</span><br><span class="line">            <span class="comment"># 确保不是当前个体且不与r1，r2相等</span></span><br><span class="line">            r3 = np.random.randint(<span class="number">0</span>, pop_num)</span><br><span class="line">        mut_pop[indi] = raw_pop[r1] + mut_coe * (raw_pop[r2] - raw_pop[r3])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 交叉</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> n <span class="keyword">in</span> range(<span class="number">0</span>, pop_num):</span><br><span class="line">        <span class="comment"># 交叉点</span></span><br><span class="line">        <span class="comment"># r = np.random.randint(0, pop_dim)</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, pop_dim):</span><br><span class="line">            cro_r = np.random.rand()</span><br><span class="line">            <span class="keyword">if</span> cro_r &lt; cro_coe:</span><br><span class="line">                cho_pop[n][i] = mut_pop[n][i].copy()</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                cho_pop[n][i] = raw_pop[n][i].copy()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 边界条件处理</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, pop_num):</span><br><span class="line">        <span class="keyword">if</span> pop_dim == <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">if</span> cho_pop[i][<span class="number">0</span>] &gt; x_top <span class="keyword">or</span> cho_pop[i][<span class="number">0</span>] &lt; x_bottom:</span><br><span class="line">                cho_pop[i][<span class="number">0</span>] = np.random.rand() * (x_top - x_bottom) + x_bottom</span><br><span class="line">            <span class="keyword">if</span> cho_pop[i][<span class="number">1</span>] &gt; y_top <span class="keyword">or</span> cho_pop[i][<span class="number">1</span>] &lt; y_bottom:</span><br><span class="line">                cho_pop[i][<span class="number">1</span>] = np.random.rand() * (y_top - y_bottom) + y_bottom</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>, pop_dim):</span><br><span class="line">                <span class="keyword">if</span> cho_pop[i][j] &gt; xi_top <span class="keyword">or</span> cho_pop[i][j] &lt; xi_bottom:</span><br><span class="line">                    cho_pop[i][j] = np.random.rand() * (xi_top - xi_bottom) + xi_bottom</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 选择</span></span><br><span class="line">    <span class="comment"># 选择种群的函数值</span></span><br><span class="line">    cur_objs = np.random.rand(pop_num)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, pop_num):</span><br><span class="line">        cur_objs[i] = obj_func(func_to_cal, cho_pop[i])</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 如果选择种群的函数值好一些就赋值给原始种群</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, pop_num):</span><br><span class="line">        <span class="keyword">if</span> cur_objs[i] &lt; objs[i]:</span><br><span class="line">            raw_pop[i] = cho_pop[i].copy()</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 再重新计算原始种群的函数值</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, pop_num):</span><br><span class="line">        objs[i] = obj_func(func_to_cal, raw_pop[i])</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 记录这一代最好的函数值</span></span><br><span class="line">    trace[iter + <span class="number">1</span>] = objs.min()</span><br></pre></td></tr></table></figure></p>
+<p>结果的输出。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">print(trace[<span class="number">-1</span>])</span><br><span class="line"><span class="comment"># 这里是绘图过程</span></span><br><span class="line">x = range(<span class="number">0</span>, iterations + <span class="number">1</span>)</span><br><span class="line">plt.scatter(x, trace)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></p>
+<h2 id="关于引用"><a href="#关于引用" class="headerlink" title="关于引用"></a>关于引用</h2><p>如果有需要转载文章或者使用源代码，只需要在文首加上：<br>原作者：Christoper Hoy<br>作者Blog：<a href="https://hoyyy.me" target="_blank" rel="noopener">https://hoyyy.me</a></p>
+<p>十分感谢。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Genetic-Algorithm/" rel="tag"># Genetic Algorithm</a>
+          
+            <a href="/tags/Particle-Swarm-Optimization/" rel="tag"># Particle Swarm Optimization</a>
+          
+            <a href="/tags/Differential-Evolution/" rel="tag"># Differential Evolution</a>
+          
+            <a href="/tags/连续优化问题/" rel="tag"># 连续优化问题</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/24/快速转入Python笔记/" rel="next" title="快速转入Python笔记">
+                <i class="fa fa-chevron-left"></i> 快速转入Python笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Christopher Hoy</p>
+              <p class="site-description motion-element" itemprop="description">不定期更新一些学习心得</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://instagram.com/vonyhoy" target="_blank" title="Instagram">
+                      
+                        <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://lightmare.cn/" title="Lightmare" target="_blank">Lightmare</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关键词"><span class="nav-number">2.</span> <span class="nav-text">关键词</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一-目标问题概述"><span class="nav-number">3.</span> <span class="nav-text">一  目标问题概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Rastrigin-Function"><span class="nav-number">3.1.</span> <span class="nav-text">1. Rastrigin Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Ackley-Function"><span class="nav-number">3.2.</span> <span class="nav-text">2. Ackley Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Sphere-Function"><span class="nav-number">3.3.</span> <span class="nav-text">3. Sphere Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Rosenbrock-Function"><span class="nav-number">3.4.</span> <span class="nav-text">4. Rosenbrock Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Beale-Function"><span class="nav-number">3.5.</span> <span class="nav-text">5. Beale Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Schaffer-Function"><span class="nav-number">3.6.</span> <span class="nav-text">6. Schaffer Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-Styblinski-Tang-Function"><span class="nav-number">3.7.</span> <span class="nav-text">7. Styblinski-Tang Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-Bukin-Function"><span class="nav-number">3.8.</span> <span class="nav-text">8. Bukin Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-Himmelblaus-Function"><span class="nav-number">3.9.</span> <span class="nav-text">9. Himmelblaus Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-Cross-in-tray-Function"><span class="nav-number">3.10.</span> <span class="nav-text">10. Cross in tray Function</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序设计思路"><span class="nav-number">4.</span> <span class="nav-text">程序设计思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遗传算法"><span class="nav-number">5.</span> <span class="nav-text">遗传算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#粒子群算法"><span class="nav-number">6.</span> <span class="nav-text">粒子群算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#差分演化算法"><span class="nav-number">7.</span> <span class="nav-text">差分演化算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最终解决"><span class="nav-number">8.</span> <span class="nav-text">最终解决</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据分析"><span class="nav-number">9.</span> <span class="nav-text">数据分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整代码"><span class="nav-number">10.</span> <span class="nav-text">完整代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于引用"><span class="nav-number">11.</span> <span class="nav-text">关于引用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Christopher Hoy</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站访问总量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
