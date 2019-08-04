@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="PAT,C++,Tree,DFS,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="小贺今天有认真学习吗" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言自从上次三月份的PAT失利以来，到现在一直在断断续续为九月份的PAT备战，但是离考试还有一个月，我却还有一百多道题还没刷完，每周自己记录的笔记也没有坚持下来。为了在接下来的一个月里进一步提升自己解决问题的能力，之后我将把我每次解答PAT甲级的代码以及相应的反思整合成博客，包括之前已经完成的在内，发布在我的个人博客上，希望通过这种方式强迫自己多写代码，随时保持编程的手感。 题目原文Given a">
+<meta name="keywords" content="PAT,C++,Tree,DFS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PAT甲级 1053. Path of Equal Weight">
+<meta property="og:url" content="http://hoyyy.com/2019/08/04/PAT甲级-1053-Path-of-Equal-Weight/index.html">
+<meta property="og:site_name" content="小贺今天有认真学习吗">
+<meta property="og:description" content="前言自从上次三月份的PAT失利以来，到现在一直在断断续续为九月份的PAT备战，但是离考试还有一个月，我却还有一百多道题还没刷完，每周自己记录的笔记也没有坚持下来。为了在接下来的一个月里进一步提升自己解决问题的能力，之后我将把我每次解答PAT甲级的代码以及相应的反思整合成博客，包括之前已经完成的在内，发布在我的个人博客上，希望通过这种方式强迫自己多写代码，随时保持编程的手感。 题目原文Given a">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://hoyyy.com/2019/08/04/PAT甲级-1053-Path-of-Equal-Weight/figure1.png">
+<meta property="og:updated_time" content="2019-08-04T13:02:06.027Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PAT甲级 1053. Path of Equal Weight">
+<meta name="twitter:description" content="前言自从上次三月份的PAT失利以来，到现在一直在断断续续为九月份的PAT备战，但是离考试还有一个月，我却还有一百多道题还没刷完，每周自己记录的笔记也没有坚持下来。为了在接下来的一个月里进一步提升自己解决问题的能力，之后我将把我每次解答PAT甲级的代码以及相应的反思整合成博客，包括之前已经完成的在内，发布在我的个人博客上，希望通过这种方式强迫自己多写代码，随时保持编程的手感。 题目原文Given a">
+<meta name="twitter:image" content="http://hoyyy.com/2019/08/04/PAT甲级-1053-Path-of-Equal-Weight/figure1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://hoyyy.com/2019/08/04/PAT甲级-1053-Path-of-Equal-Weight/">
+
+
+
+
+
+  <title>PAT甲级 1053. Path of Equal Weight | 小贺今天有认真学习吗</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小贺今天有认真学习吗</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">昨日恍如隔世，少年砥砺向前</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://hoyyy.com/2019/08/04/PAT甲级-1053-Path-of-Equal-Weight/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Christopher Hoy">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小贺今天有认真学习吗">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">PAT甲级 1053. Path of Equal Weight</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-04T17:44:55+08:00">
+                2019-08-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OJ/" itemprop="url" rel="index">
+                    <span itemprop="name">OJ</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>自从上次三月份的PAT失利以来，到现在一直在断断续续为九月份的PAT备战，但是离考试还有一个月，我却还有一百多道题还没刷完，每周自己记录的笔记也没有坚持下来。<br>为了在接下来的一个月里进一步提升自己解决问题的能力，之后我将把我每次解答PAT甲级的代码以及相应的反思整合成博客，包括之前已经完成的在内，发布在我的个人博客上，希望通过这种方式强迫自己多写代码，随时保持编程的手感。</p>
+<h2 id="题目原文"><a href="#题目原文" class="headerlink" title="题目原文"></a>题目原文</h2><p>Given a non-empty tree with root R, and with weight Wi assigned to each tree node T​i. The weight of a path from R to L is defined to be the sum of the weights of all the nodes along the path from R to any leaf node L.</p>
+<p>Now given any weighted tree, you are supposed to find all the paths with their weights equal to a given number. For example, let’s consider the tree showed in the following figure: for each node, the upper number is the node ID which is a two-digit number, and the lower number is the weight of that node. Suppose that the given number is 24, then there exists 4 different paths which have the same given weight: {10 5 2 7}, {10 4 10}, {10 3 3 6 2} and {10 3 3 6 2}, which correspond to the red edges in the figure.<br><img src="figure1.png" alt></p>
+<p>Input Specification:<br>Each input file contains one test case. Each case starts with a line containing 0 &lt; N ≤ 100, the number of nodes in a tree, M (&lt;N), the number of non-leaf nodes, and 0 &lt; S &lt; 2^​30, the given weight number. The next line contains N positive numbers where W​i (&lt;1000) corresponds to the tree node Ti. Then M lines follow, each in the format:<br>ID K ID1 ID2 … IDK<br>where ID is a two-digit number representing a given non-leaf node, K is the number of its children, followed by a sequence of two-digit ID’s of its children. For the sake of simplicity, let us fix the root ID to be 00.</p>
+<p>Output Specification:<br>For each test case, print all the paths with weight S in non-increasing order. Each path occupies a line with printed weights from the root to the leaf in order. All the numbers must be separated by a space with no extra space at the end of the line.</p>
+<p>Note: sequence {A​1, A​2, ⋯, An} is said to be greater than sequence {B1, B2, ⋯, Bm} if there exists 1 ≤ k &lt; min{n, m} such that A​i = Bi for i=1,⋯,k, and Ak+1 &gt; B​k+1.</p>
+<p>Sample Input:<br>20 9 24<br>10 2 4 3 5 10 2 18 9 7 2 2 1 3 12 1 8 6 2 2<br>00 4 01 02 03 04<br>02 1 05<br>04 2 06 07<br>03 3 11 12 13<br>06 1 09<br>07 2 08 10<br>16 1 15<br>13 3 14 16 17<br>17 2 18 19</p>
+<p>Sample Output:<br>10 5 2 7<br>10 4 10<br>10 3 3 6 2<br>10 3 3 6 2</p>
+<h2 id="我的解决思路"><a href="#我的解决思路" class="headerlink" title="我的解决思路"></a>我的解决思路</h2><p>算法上，计算树中路径的长度，自然就想到了深度优先搜索（DFS）。题目的要求是，从根结点出发，到达某个叶结点的总权重和要等于给定的某个值，然后按顺序输出这条路径上的权重，那么就在深度搜索的过程中记录到达当前时的权重和以及路径，然后和给定值比较，第一：如果权重和小于给定值，就递归继续向下一层遍历，并传递到目前为止的权重和给下一层；如第二：如果权重和等于给定值，再判断当前结点是否是叶结点，如果是就说明是符合题目要求的路径，根据记录的路径输出，如果不是，就结束向下遍历；第三如果大于，说明这条路径上没有符合要求的结果，停止遍历。</p>
+<p>数据结构上，我开始是用二维矩阵存储布尔值来模拟一个树，如果第一维编号是第二维编号的父亲结点，就设置为true，如果不是就是false（初始化的时候用fill函数默认初始化为false）。另外用一个一维整型数组单独存储每个编号结点的权重。</p>
+<p>但是后来我发现题目有一个要求要实现起来就有点麻烦了。题目要求一旦符合给定值权重和的路径不唯一，就按照先出现的权重大的那一条路径优先来输出，而不能按随机找到的顺序输出。</p>
+<p>这里我想了一个办法，用vector数组来存储树，这样在输入每个结点的子结点的时候对他们按照权重进行排序，那么深度优先遍历的过程中就会优先遍历那些权重更大的结点，这样自然输出的顺序就符合题目要求。</p>
+<p>最后我按照设想写好了代码，并运行。</p>
+<p>However……</p>
+<p>case2始终没办法通过，网上查资料也没有人提到这个case为什么会在另外5个case全部正确的情况下给出 <strong>答案错误</strong>（也就是说既不是格式也不是内存，是算法上确实存在漏洞）</p>
+<p>这里我觉得可以复习一下如何通过几个常见的case反馈结果来分析错误的类型。<br><strong>答案正确</strong> 就是其字面意思。<br><strong>编译错误</strong> 则一般是语法上出现错误，有时候也需要注意特性的兼容性。<br><strong>格式错误</strong> 则一般是题目规定了输出格式，比如必须用空格隔开，结尾不允许有空格等。<br><strong>运行超时</strong> 则是代码效率太低了，首先考虑自己的代码是否在算法层面效率低，比如有nlogn的解法但是自己为了简单用的n^2的解法，这种只能重新设计程序。如果算法自己想不出更好时间复杂度的解决方案，就尝试在数据结构和输入输出流上优化，比如是否可以用C的数组替代C++的容器或者不用自己构建类也能写出来，而存在大量输入输出的情况下，应该优先考虑用C的cstdio函数库的中函数。<br><strong>答案错误</strong> 则一般是算法设计上存在问题，导致不能得到正确的结果。这个也要看情况，如果是全部case都是答案错误，那么就应该思考自己到底是来干嘛的；如果是一部分答案正确，一部分答案错误，那很有可能是题目给的数据有一些特殊的情况，比如和零有关的情况或者最大边界情况，像这个题目我最后有一个case答案错误就是因为没有考虑到如果只给出一个根结点而没有子结点的情况。<br><strong>内存超限</strong> 出现比较少，除非题目明确限制了能使用的空间从而让你不能用常规的方法做，或者自己用了很复杂的面向对象结构。<br><strong>段错误</strong> 则一般指内存越界的情况或者访问了没有定义的内存区域，这种时候要仔细检查一些访问数组的下标是否有超出的情况，尤其是在循环里。</p>
+<p>以上是我做题的过程中常见的错误，其他的应该是从没见过。</p>
+<p>回到本题，前面说了是因为没有考虑到只给出一个根结点的情况，因为我的输出是在DFS函数内输出的，而遍历从根结点的子结点开始遍历，而因为其没有子结点，一进去马上又出来了啥也没干，所以这个case就没法通过，而应该在这个跟结点权重等于给定值的情况下输出这个权重。</p>
+<h2 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// C++字符串和数值转换也包含在里面</span></span><br><span class="line"><span class="comment">// #include &lt;string&gt;</span></span><br><span class="line"><span class="comment">// C++向量</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="comment">// map和multimap都在里面</span></span><br><span class="line"><span class="comment">// #include &lt;map&gt;</span></span><br><span class="line"><span class="comment">// set和multiset都在里面</span></span><br><span class="line"><span class="comment">// #include &lt;set&gt;</span></span><br><span class="line"><span class="comment">// 各类算法包括排序、查询、最大最小、等等</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 关于数学使用</span></span><br><span class="line"><span class="comment">// #include &lt;cmath&gt;</span></span><br><span class="line"><span class="comment">// 关于字符串和数值类型的转换、随机数、动态内存分配、C的排序等等</span></span><br><span class="line"><span class="comment">// #include &lt;cstdlib&gt;</span></span><br><span class="line"><span class="comment">// 关于C字符串的操作</span></span><br><span class="line"><span class="comment">// #include &lt;cstring&gt;</span></span><br><span class="line"><span class="comment">// 关于数值的最大最小边界的定义</span></span><br><span class="line"><span class="comment">// #include &lt;climits&gt;</span></span><br><span class="line"><span class="comment">// 字符操作</span></span><br><span class="line"><span class="comment">// #include &lt;cctype&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 树结构</span></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; tree[<span class="number">101</span>];</span><br><span class="line"><span class="comment">// 每个结点的权重</span></span><br><span class="line"><span class="keyword">int</span> weights[<span class="number">101</span>];</span><br><span class="line"><span class="comment">// 总共结点数目，非叶结点数，给定数值</span></span><br><span class="line"><span class="keyword">int</span> N, M, S;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 深度优先遍历加输出部分</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> root, <span class="keyword">int</span> sum, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; pathW)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; tree[root].size(); i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(sum + weights[tree[root][i]] &lt; S) &#123;</span><br><span class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; newPathW = pathW;</span><br><span class="line">            newPathW.push_back(weights[tree[root][i]]);</span><br><span class="line">            dfs(tree[root][i], sum + weights[tree[root][i]], newPathW);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span>(sum + weights[tree[root][i]] == S) &#123;</span><br><span class="line">            <span class="keyword">if</span>(tree[tree[root][i]].size() == <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; pathW.size(); i++) &#123;</span><br><span class="line">                    <span class="built_in">cout</span> &lt;&lt; pathW[i] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, weights[tree[root][i]]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 给每个非叶结点的子结点们排序</span></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">compareNode</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> weights[a] &gt; weights[b];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// input</span></span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d %d"</span>, &amp;N, &amp;M, &amp;S);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;weights[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 当只有一个跟结点的时候</span></span><br><span class="line">    <span class="keyword">if</span>(M == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span>(weights[<span class="number">0</span>] == S) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%d"</span>, weights[<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> nonLeaf, leafNum, leaf;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; M; i++) &#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;nonLeaf, &amp;leafNum);</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; children;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; leafNum; j++) &#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;leaf);</span><br><span class="line">            children.push_back(leaf);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 排序子结点</span></span><br><span class="line">        sort(children.begin(), children.end(), compareNode);</span><br><span class="line">        tree[nonLeaf] = children;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// handle</span></span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; pathW;</span><br><span class="line">    pathW.push_back(weights[<span class="number">0</span>]);</span><br><span class="line">    dfs(<span class="number">0</span>, weights[<span class="number">0</span>], pathW);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// output</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关于我写代码的格式，对于PAT，我已经有了一个固定的模版，每次写能省下不少（也不是很多）的时间，如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// C++字符串和数值转换也包含在里面</span></span><br><span class="line"><span class="comment">// #include &lt;string&gt;</span></span><br><span class="line"><span class="comment">// C++向量</span></span><br><span class="line"><span class="comment">// #include &lt;vector&gt;</span></span><br><span class="line"><span class="comment">// map和multimap都在里面</span></span><br><span class="line"><span class="comment">// #include &lt;map&gt;</span></span><br><span class="line"><span class="comment">// set和multiset都在里面</span></span><br><span class="line"><span class="comment">// #include &lt;set&gt;</span></span><br><span class="line"><span class="comment">// 各类算法包括排序、查询、最大最小、等等</span></span><br><span class="line"><span class="comment">// #include &lt;algorithm&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 关于数学使用</span></span><br><span class="line"><span class="comment">// #include &lt;cmath&gt;</span></span><br><span class="line"><span class="comment">// 关于字符串和数值类型的转换、随机数、动态内存分配、C的排序等等</span></span><br><span class="line"><span class="comment">// #include &lt;cstdlib&gt;</span></span><br><span class="line"><span class="comment">// 关于C字符串的操作</span></span><br><span class="line"><span class="comment">// #include &lt;cstring&gt;</span></span><br><span class="line"><span class="comment">// 关于数值的最大最小边界的定义</span></span><br><span class="line"><span class="comment">// #include &lt;climits&gt;</span></span><br><span class="line"><span class="comment">// 字符操作</span></span><br><span class="line"><span class="comment">// #include &lt;cctype&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// input</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// handle</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// output</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关于上述代码里我对只有一个根结点的处理很不优雅，但是在正式考试的时候还是先解决问题优先，以后工作了也是，能安全稳定地完成目标是要放在第一位的，而在有余力的同时再去考虑结构优化，因为每个人的能力都是有限的，不可能一开始就考虑得全面和尽善尽美，只能一步一步去完善自己。</p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>这个题目是30分级的，也就是甲级考试4道题的最后一题，我没有计时，但大概写代码一个半小时到两个小时左右，严重超时，应该限制在50分钟左右最好。因为数据结构选择的摇摆耽误了不少时间，后来因为一个case没办法通过又耽误了一个上午，所以总的来说是不尽人意的，后面还需要对每个题目严格计时，从而提高效率。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PAT/" rel="tag"># PAT</a>
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+            <a href="/tags/Tree/" rel="tag"># Tree</a>
+          
+            <a href="/tags/DFS/" rel="tag"># DFS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/08/三种智能优化算法解决十个无约束单目标优化问题/" rel="next" title="三种智能优化算法解决十个无约束单目标优化问题">
+                <i class="fa fa-chevron-left"></i> 三种智能优化算法解决十个无约束单目标优化问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Christopher Hoy</p>
+              <p class="site-description motion-element" itemprop="description">不定期更新一些学习心得</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://instagram.com/vonyhoy" target="_blank" title="Instagram">
+                      
+                        <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://lightmare.cn/" title="Lightmare" target="_blank">Lightmare</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目原文"><span class="nav-number">2.</span> <span class="nav-text">题目原文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#我的解决思路"><span class="nav-number">3.</span> <span class="nav-text">我的解决思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源代码"><span class="nav-number">4.</span> <span class="nav-text">源代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">5.</span> <span class="nav-text">后记</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Christopher Hoy</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站访问总量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
