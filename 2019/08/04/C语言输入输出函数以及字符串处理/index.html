@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="小贺今天有认真学习吗">
 <meta property="og:description" content="前言这篇是我之前做题的过程中整理的一些关于C语言的输入输出函数的使用细节，以及一些C字符串的处理函数使用。熟悉这些知识可以在写编程题的过程中提高代码的运行效率，实现一些特定的题目要求格式。在不需要使用C++类作为输入输出对象的情况下，使用stdio要比iostream的速度要快很多，所以尽量应使用stdio的输入输出函数。同时对于字符处理，在不是用string的情况下字符数组也有很多方便的处理函数">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-04T14:04:18.601Z">
+<meta property="og:updated_time" content="2019-08-04T14:07:56.399Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C语言输入输出函数以及字符串处理">
 <meta name="twitter:description" content="前言这篇是我之前做题的过程中整理的一些关于C语言的输入输出函数的使用细节，以及一些C字符串的处理函数使用。熟悉这些知识可以在写编程题的过程中提高代码的运行效率，实现一些特定的题目要求格式。在不需要使用C++类作为输入输出对象的情况下，使用stdio要比iostream的速度要快很多，所以尽量应使用stdio的输入输出函数。同时对于字符处理，在不是用string的情况下字符数组也有很多方便的处理函数">
@@ -400,6 +400,7 @@
 <li>在printf()中，* 修饰转换说明符后，则应该在后面的对应变量之前再加一个变量来动态指定限定的最小字段宽度。</li>
 <li>在scanf()中，* 修饰转换说明符后，表明这个位置的输入跳过，进入之后的输入项，用来读入数据时，忽略某些不需要的数据</li>
 </ol>
+<p>作者：Anyer Hoy<br>博客：<a href="https://hoyyy.me" target="_blank" rel="noopener">https://hoyyy.me</a></p>
 <h2 id="C字符串处理函数"><a href="#C字符串处理函数" class="headerlink" title="C字符串处理函数"></a>C字符串处理函数</h2><p>使用前应引用cstring</p>
 <h3 id="strlen-函数和sizeof运算符"><a href="#strlen-函数和sizeof运算符" class="headerlink" title="strlen()函数和sizeof运算符"></a>strlen()函数和sizeof运算符</h3><p>sizeof是以字节为单位给出数据的大小，而strlen()则是以字符为单位给出字符串的长度</p>
 <h3 id="getchar-函数和putchar-函数"><a href="#getchar-函数和putchar-函数" class="headerlink" title="getchar()函数和putchar()函数"></a>getchar()函数和putchar()函数</h3><p>这两个是定义在<cstdio>的，单独读入和输出每个字符，对于c = getchar()赋值语句本身也可以表示读取的字符本身，可以用于输入判断，如<br><code>if(c = getchar()) != &#39;a&#39;){}</code></cstdio></p>
