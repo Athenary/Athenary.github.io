@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="C&C++,string,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="小贺今天有认真学习吗" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="前言在PAT中的一二题中经常出现字符处理的题目，如果对string熟悉的话，其实难度就不大了，这里再复习一遍。 定义12345#include &amp;lt;string&amp;gt;using namespace std;string str;string str1, str2; 【STAR】倒序遍历使用倒序迭代器函数rbegin()和rend()123for(auto riter = str.rbegin">
+<meta name="keywords" content="C&amp;C++,string">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++ string的使用">
+<meta property="og:url" content="http://hoyyy.com/2019/08/04/C-string的使用/index.html">
+<meta property="og:site_name" content="小贺今天有认真学习吗">
+<meta property="og:description" content="前言在PAT中的一二题中经常出现字符处理的题目，如果对string熟悉的话，其实难度就不大了，这里再复习一遍。 定义12345#include &amp;lt;string&amp;gt;using namespace std;string str;string str1, str2; 【STAR】倒序遍历使用倒序迭代器函数rbegin()和rend()123for(auto riter = str.rbegin">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-08-04T14:14:21.111Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++ string的使用">
+<meta name="twitter:description" content="前言在PAT中的一二题中经常出现字符处理的题目，如果对string熟悉的话，其实难度就不大了，这里再复习一遍。 定义12345#include &amp;lt;string&amp;gt;using namespace std;string str;string str1, str2; 【STAR】倒序遍历使用倒序迭代器函数rbegin()和rend()123for(auto riter = str.rbegin">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://hoyyy.com/2019/08/04/C-string的使用/">
+
+
+
+
+
+  <title>C++ string的使用 | 小贺今天有认真学习吗</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">小贺今天有认真学习吗</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">昨日恍如隔世，少年砥砺向前</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://hoyyy.com/2019/08/04/C-string的使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Anyer Hoy">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小贺今天有认真学习吗">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">C++ string的使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-04T22:12:07+08:00">
+                2019-08-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C-C-Language/" itemprop="url" rel="index">
+                    <span itemprop="name">C&C++ Language</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv">本文阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在PAT中的一二题中经常出现字符处理的题目，如果对string熟悉的话，其实难度就不大了，这里再复习一遍。</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">string</span> str;</span><br><span class="line"><span class="built_in">string</span> str1, str2;</span><br></pre></td></tr></table></figure>
+<h2 id="【STAR】倒序遍历"><a href="#【STAR】倒序遍历" class="headerlink" title="【STAR】倒序遍历"></a>【STAR】倒序遍历</h2><p>使用倒序迭代器函数rbegin()和rend()<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">auto</span> riter = str.rbegin(); riter != str.rend(); riter++) &#123;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; *riter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="【STAR】获得字符长度"><a href="#【STAR】获得字符长度" class="headerlink" title="【STAR】获得字符长度"></a>【STAR】获得字符长度</h2><p>使用size()成员方法或者length()成员函数<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; str.size();</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; str.length();</span><br></pre></td></tr></table></figure></p>
+<p>之所以有两个是历史原因，两个都返回字节数（bytes）。</p>
+<h2 id="改变string的容量"><a href="#改变string的容量" class="headerlink" title="改变string的容量"></a>改变string的容量</h2><p>使用resize()成员方法<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">str.resize(n);</span><br><span class="line">str.resize(n, <span class="string">'+'</span>);</span><br><span class="line"><span class="comment">// n是目标大小</span></span><br><span class="line"><span class="comment">// 如果string本身的长度小于n，则会从第一个开始到第n个（带到长度n）被保留下来，剩余的则会被切除</span></span><br><span class="line"><span class="comment">// 如果stirng本身的长度大于n，则会在原来string的基础上在后面添加空的位置直到达到长度n，如果指定了字符，则多的位置全部初始化为该字符</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="将string变成空字符串"><a href="#将string变成空字符串" class="headerlink" title="将string变成空字符串"></a>将string变成空字符串</h2><p>使用clear()成员方法<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str.clear();</span><br></pre></td></tr></table></figure></p>
+<h2 id="【STAR】判断string是不是空字符串"><a href="#【STAR】判断string是不是空字符串" class="headerlink" title="【STAR】判断string是不是空字符串"></a>【STAR】判断string是不是空字符串</h2><p>使用empty()成员方法<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> isEmpty = str.empty();</span><br></pre></td></tr></table></figure></p>
+<h2 id="访问特定位置的字符，并可以修改"><a href="#访问特定位置的字符，并可以修改" class="headerlink" title="访问特定位置的字符，并可以修改"></a>访问特定位置的字符，并可以修改</h2><p>使用[]或者at()方法，都接受从0到length() - 1的size_t类型索引参数，结果是引用类型。如果string是const修饰，则是常量引用，则不可以修改。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; str[<span class="number">0</span>];</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; str.at(<span class="number">0</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="访问开头和结尾的字符，并可以修改"><a href="#访问开头和结尾的字符，并可以修改" class="headerlink" title="访问开头和结尾的字符，并可以修改"></a>访问开头和结尾的字符，并可以修改</h2><p>使用front()和back()成员方法分别获得string的首个字符的引用和最后一个字符的引用，但是不能对空字符串使用。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span> &lt;&lt; str.front();</span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; str.back();</span><br></pre></td></tr></table></figure></p>
+<h2 id="【STAR】字符串尾部拼接"><a href="#【STAR】字符串尾部拼接" class="headerlink" title="【STAR】字符串尾部拼接"></a>【STAR】字符串尾部拼接</h2><p>使用+=运算符（3个重载运算）<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">str += <span class="string">"K"</span>;    <span class="comment">//C风格的显式字符串</span></span><br><span class="line">str += str1;    <span class="comment">//string拼接到string</span></span><br><span class="line">str += <span class="string">'\n'</span>;    <span class="comment">//直接拼接字符</span></span><br></pre></td></tr></table></figure></p>
+<p>使用append()成员方法（6个重载方法）<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">str.append(str2);    <span class="comment">//string拼接string</span></span><br><span class="line">str.append(str2, <span class="number">6</span>, <span class="number">3</span>);    <span class="comment">//拼接另一个string的子串，C++里的范围一般是第一个参数指定开始位置，而第二个参数指定长度</span></span><br><span class="line">str.append(<span class="string">"Nice to see you"</span>, <span class="number">5</span>);    <span class="comment">//拼接C风格字符串同时指定前多少个</span></span><br><span class="line">str.append(<span class="string">"Nice to see you"</span>);    <span class="comment">//或者全部拼接一个C字符串</span></span><br><span class="line">str.append(<span class="number">10u</span>, <span class="string">'0'</span>);    <span class="comment">//指定拼接某个数量的字符</span></span><br><span class="line">str.append(str2.begin() + <span class="number">8</span>, str2.end());    <span class="comment">//指定拼接串的迭代器范围</span></span><br><span class="line"></span><br><span class="line">str.append&lt;<span class="keyword">int</span>&gt;(<span class="number">10</span>, <span class="number">0x2D</span>);    <span class="comment">//本质上和指定数目拼接字符相同</span></span><br></pre></td></tr></table></figure></p>
+<p>使用push_back()成员方法将字符拼接到string末尾<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str.push_back(<span class="string">'c'</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="给字符串赋值（覆盖原值）"><a href="#给字符串赋值（覆盖原值）" class="headerlink" title="给字符串赋值（覆盖原值）"></a>给字符串赋值（覆盖原值）</h2><p>使用=运算符或者assign()成员方法（6个重载方法）<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">str.assign(str1);    <span class="comment">//完整赋值</span></span><br><span class="line">str.assign(str1, <span class="number">10</span>, <span class="number">6</span>);   <span class="comment">//指定开始位置和长度部分赋值</span></span><br><span class="line">str.assign(<span class="string">"Are you kidding?"</span>, <span class="number">6</span>);   <span class="comment">//C字符串以及指定从头开始的长度</span></span><br><span class="line">str.assign(<span class="string">"Maybe"</span>);    <span class="comment">//C字符串的完整赋值</span></span><br><span class="line">str.assign(<span class="number">10</span>, <span class="string">'*'</span>);    <span class="comment">//指定数目的字符赋值</span></span><br><span class="line">str.assign(str1.begin(), str1.end() - <span class="number">1</span>);    <span class="comment">//指定范围迭代器赋值</span></span><br><span class="line"></span><br><span class="line">str.assign&lt;<span class="keyword">int</span>&gt;(<span class="number">10</span>, <span class="number">0x2D</span>);    <span class="comment">//本质上和指定数目拼接字符相同</span></span><br></pre></td></tr></table></figure></p>
+<p>这套重载和拼接是一样的</p>
+<h2 id="插入字符串"><a href="#插入字符串" class="headerlink" title="插入字符串"></a>插入字符串</h2><p>使用insert()成员方法</p>
+<h2 id="擦除部分字符串（会减少长度）"><a href="#擦除部分字符串（会减少长度）" class="headerlink" title="擦除部分字符串（会减少长度）"></a>擦除部分字符串（会减少长度）</h2><p>使用erase()成员方法</p>
+<h2 id="替换字符串"><a href="#替换字符串" class="headerlink" title="替换字符串"></a>替换字符串</h2><p>使用replace()成员方法（实际上就是erase()和insert()的结合效果）</p>
+<h2 id="交换两个string的内容"><a href="#交换两个string的内容" class="headerlink" title="交换两个string的内容"></a>交换两个string的内容</h2><p>使用swap()成员方法</p>
+<h2 id="删除最后一个字符"><a href="#删除最后一个字符" class="headerlink" title="删除最后一个字符"></a>删除最后一个字符</h2><p>使用pop_back()成员方法</p>
+<h2 id="转换成C字符串"><a href="#转换成C字符串" class="headerlink" title="转换成C字符串"></a>转换成C字符串</h2><p>使用c_str()成员方法，返回一个字符串指针</p>
+<h2 id="【STAR】查找string的子列"><a href="#【STAR】查找string的子列" class="headerlink" title="【STAR】查找string的子列"></a>【STAR】查找string的子列</h2><p>使用find()成员函数（4个重载）<br>返回子串中第一个字符第一次出现的位置，类型是size_t<br>如果没有找到就返回string\::npos<br>rfind()成员函数则是返回最后一个匹配的子串的第一个字符的位置<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">size_t</span> found = str.find(str1);</span><br><span class="line"><span class="keyword">size_t</span> found = str.find(<span class="string">"What a good day"</span>, <span class="number">2</span>, <span class="number">6</span>);    <span class="comment">//指定范围</span></span><br><span class="line"><span class="keyword">size_t</span> found = str.find(<span class="string">"Hi"</span>);</span><br><span class="line"><span class="keyword">size_t</span> found = str.find(<span class="string">'h'</span>);    <span class="comment">//字符</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="【STAR】获得string的子列"><a href="#【STAR】获得string的子列" class="headerlink" title="【STAR】获得string的子列"></a>【STAR】获得string的子列</h2><p>使用substr()成员方法<br>提供开始位置的参数，子串长度的参数<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">string</span> subs1 = str.substr(<span class="number">2</span>, <span class="number">4</span>);</span><br><span class="line"><span class="built_in">string</span> subs2 = str.substr(<span class="number">2</span>);    <span class="comment">//从2到结尾</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="比较字符串"><a href="#比较字符串" class="headerlink" title="比较字符串"></a>比较字符串</h2><p>使用compare()成员变量<br>提供6个重载<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(str.compare(str1) == <span class="number">0</span>) &#123;</span><br><span class="line">	<span class="comment">//They are equal</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(str.compare(<span class="number">6</span>, <span class="number">5</span>, str1) == <span class="number">0</span>) &#123;</span><br><span class="line">	<span class="comment">//str位置6开始长度为5的子串和str1相比</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(str.compare(str.size() - <span class="number">5</span>, <span class="number">5</span>, str1) &#123;</span><br><span class="line">	<span class="comment">//str最后五个字符与str1相比</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 可以抽象理解为str - str1</span></span><br></pre></td></tr></table></figure></p>
+<p>如果返回结果等于零，则两个字符串相等<br>返回结果小于零，则说明参数里要匹配的字符串第一个不匹配的字符值要更大，或者全部匹配了，但是这个字符串比调用这个方法的字符串要长。<br>返回结果大于零，说明参数里要匹配的字符串第一个不匹配的字符值要更小，或者全部匹配了，但是这个字符串要更短。</p>
+<h2 id="字符流读入"><a href="#字符流读入" class="headerlink" title="字符流读入"></a>字符流读入</h2><p>使用string\::getline()类方法<br>第一个参数是一个流，第二个参数是保存的string，如果指定了第三个参数一个字符，就在出现这个字符的时候停止输入，没有就直到遇到换行符。(第三个参数或者换行符会被读取但是被丢弃）</p>
+<h2 id="【STAR】字符串转int"><a href="#【STAR】字符串转int" class="headerlink" title="【STAR】字符串转int"></a>【STAR】字符串转int</h2><p>使用stoi()类方法<br>第一个参数是要转换的string；第二个参数是一个指针，这指针是指向一个size_t类型的变量，也可以指定为nullptr不用，用了就会将那个值设置为要转换的string的数字部分的之后第一个位置；第三个参数是指定进制，默认是10，如果指定为0，则会根据stirng的格式判断该转化为什么进制。</p>
+<h2 id="各类string转其他数值类型"><a href="#各类string转其他数值类型" class="headerlink" title="各类string转其他数值类型"></a>各类string转其他数值类型</h2><p>转单浮点stof()，双浮点stod()</p>
+<h2 id="【STAR】数值类型转string"><a href="#【STAR】数值类型转string" class="headerlink" title="【STAR】数值类型转string"></a>【STAR】数值类型转string</h2><p>使用to_string()类方法</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>关于方法参数，C++里面的哲学是一致的，主要有：</p>
+<ol>
+<li>指定一定数目重复的值，则有两个参数，前者是_数量<em>，后者是</em>具体值_。</li>
+<li>关于<em>C字符串</em>如果指定长度，则是从<em>开头位置</em>开始到那个_长度_为止。</li>
+<li>对于通过位置数值截取容器对象，则第一个参数一般是<em>开始位置</em>，第二个参数是<em>截取长度</em>。</li>
+<li>迭代器则是<em>开始迭代器</em>和<em>尾后迭代器</em>确定范围。<br>几个一定要记住并熟练掌握的成员方法：</li>
+<li>倒序迭代器rbegin()和rend()</li>
+<li>获取字符串长度length()或者size()</li>
+<li>使用+=或者append()拼接字符串</li>
+<li>使用find()查找子列是否存在</li>
+<li>使用substr()获得子列<br>然后是一些类方法：</li>
+<li>使用stoi()类方法将string变为int</li>
+<li>使用to_string()类方法将数值类型转为string</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/C-C/" rel="tag"># C&C++</a>
+          
+            <a href="/tags/string/" rel="tag"># string</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/04/C语言输入输出函数以及字符串处理/" rel="next" title="C语言输入输出函数以及字符串处理">
+                <i class="fa fa-chevron-left"></i> C语言输入输出函数以及字符串处理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Anyer Hoy</p>
+              <p class="site-description motion-element" itemprop="description">不定期更新一些学习心得</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://instagram.com/vonyhoy" target="_blank" title="Instagram">
+                      
+                        <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://lightmare.cn/" title="Lightmare" target="_blank">Lightmare</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">2.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#【STAR】倒序遍历"><span class="nav-number">3.</span> <span class="nav-text">【STAR】倒序遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#【STAR】获得字符长度"><span class="nav-number">4.</span> <span class="nav-text">【STAR】获得字符长度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改变string的容量"><span class="nav-number">5.</span> <span class="nav-text">改变string的容量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将string变成空字符串"><span class="nav-number">6.</span> <span class="nav-text">将string变成空字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#【STAR】判断string是不是空字符串"><span class="nav-number">7.</span> <span class="nav-text">【STAR】判断string是不是空字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问特定位置的字符，并可以修改"><span class="nav-number">8.</span> <span class="nav-text">访问特定位置的字符，并可以修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问开头和结尾的字符，并可以修改"><span class="nav-number">9.</span> <span class="nav-text">访问开头和结尾的字符，并可以修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#【STAR】字符串尾部拼接"><span class="nav-number">10.</span> <span class="nav-text">【STAR】字符串尾部拼接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#给字符串赋值（覆盖原值）"><span class="nav-number">11.</span> <span class="nav-text">给字符串赋值（覆盖原值）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插入字符串"><span class="nav-number">12.</span> <span class="nav-text">插入字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#擦除部分字符串（会减少长度）"><span class="nav-number">13.</span> <span class="nav-text">擦除部分字符串（会减少长度）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#替换字符串"><span class="nav-number">14.</span> <span class="nav-text">替换字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交换两个string的内容"><span class="nav-number">15.</span> <span class="nav-text">交换两个string的内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除最后一个字符"><span class="nav-number">16.</span> <span class="nav-text">删除最后一个字符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转换成C字符串"><span class="nav-number">17.</span> <span class="nav-text">转换成C字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#【STAR】查找string的子列"><span class="nav-number">18.</span> <span class="nav-text">【STAR】查找string的子列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#【STAR】获得string的子列"><span class="nav-number">19.</span> <span class="nav-text">【STAR】获得string的子列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比较字符串"><span class="nav-number">20.</span> <span class="nav-text">比较字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符流读入"><span class="nav-number">21.</span> <span class="nav-text">字符流读入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#【STAR】字符串转int"><span class="nav-number">22.</span> <span class="nav-text">【STAR】字符串转int</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#各类string转其他数值类型"><span class="nav-number">23.</span> <span class="nav-text">各类string转其他数值类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#【STAR】数值类型转string"><span class="nav-number">24.</span> <span class="nav-text">【STAR】数值类型转string</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">25.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Anyer Hoy</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站访问总量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
