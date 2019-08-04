@@ -90,7 +90,7 @@
 <meta property="og:description" content="前言自从上次三月份的PAT失利以来，到现在一直在断断续续为九月份的PAT备战，但是离考试还有一个月，我却还有一百多道题还没刷完，每周自己记录的笔记也没有坚持下来。为了在接下来的一个月里进一步提升自己解决问题的能力，之后我将把我每次解答PAT甲级的代码以及相应的反思整合成博客，包括之前已经完成的在内，发布在我的个人博客上，希望通过这种方式强迫自己多写代码，随时保持编程的手感。 题目原文Given a">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://hoyyy.com/2019/08/04/PAT甲级-1053-Path-of-Equal-Weight/figure1.png">
-<meta property="og:updated_time" content="2019-08-04T13:02:06.027Z">
+<meta property="og:updated_time" content="2019-08-04T13:36:09.826Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PAT甲级 1053. Path of Equal Weight">
 <meta name="twitter:description" content="前言自从上次三月份的PAT失利以来，到现在一直在断断续续为九月份的PAT备战，但是离考试还有一个月，我却还有一百多道题还没刷完，每周自己记录的笔记也没有坚持下来。为了在接下来的一个月里进一步提升自己解决问题的能力，之后我将把我每次解答PAT甲级的代码以及相应的反思整合成博客，包括之前已经完成的在内，发布在我的个人博客上，希望通过这种方式强迫自己多写代码，随时保持编程的手感。 题目原文Given a">
@@ -270,7 +270,7 @@
     <link itemprop="mainEntityOfPage" href="http://hoyyy.com/2019/08/04/PAT甲级-1053-Path-of-Equal-Weight/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Christopher Hoy">
+      <meta itemprop="name" content="Anyer Hoy">
       <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
@@ -369,9 +369,9 @@
 <p>Note: sequence {A​1, A​2, ⋯, An} is said to be greater than sequence {B1, B2, ⋯, Bm} if there exists 1 ≤ k &lt; min{n, m} such that A​i = Bi for i=1,⋯,k, and Ak+1 &gt; B​k+1.</p>
 <p>Sample Input:<br>20 9 24<br>10 2 4 3 5 10 2 18 9 7 2 2 1 3 12 1 8 6 2 2<br>00 4 01 02 03 04<br>02 1 05<br>04 2 06 07<br>03 3 11 12 13<br>06 1 09<br>07 2 08 10<br>16 1 15<br>13 3 14 16 17<br>17 2 18 19</p>
 <p>Sample Output:<br>10 5 2 7<br>10 4 10<br>10 3 3 6 2<br>10 3 3 6 2</p>
-<h2 id="我的解决思路"><a href="#我的解决思路" class="headerlink" title="我的解决思路"></a>我的解决思路</h2><p>算法上，计算树中路径的长度，自然就想到了深度优先搜索（DFS）。题目的要求是，从根结点出发，到达某个叶结点的总权重和要等于给定的某个值，然后按顺序输出这条路径上的权重，那么就在深度搜索的过程中记录到达当前时的权重和以及路径，然后和给定值比较，第一：如果权重和小于给定值，就递归继续向下一层遍历，并传递到目前为止的权重和给下一层；如第二：如果权重和等于给定值，再判断当前结点是否是叶结点，如果是就说明是符合题目要求的路径，根据记录的路径输出，如果不是，就结束向下遍历；第三如果大于，说明这条路径上没有符合要求的结果，停止遍历。</p>
-<p>数据结构上，我开始是用二维矩阵存储布尔值来模拟一个树，如果第一维编号是第二维编号的父亲结点，就设置为true，如果不是就是false（初始化的时候用fill函数默认初始化为false）。另外用一个一维整型数组单独存储每个编号结点的权重。</p>
-<p>但是后来我发现题目有一个要求要实现起来就有点麻烦了。题目要求一旦符合给定值权重和的路径不唯一，就按照先出现的权重大的那一条路径优先来输出，而不能按随机找到的顺序输出。</p>
+<h2 id="我的解决思路"><a href="#我的解决思路" class="headerlink" title="我的解决思路"></a>我的解决思路</h2><p>算法上，计算树中路径的长度，自然就想到了深度优先搜索（DFS）。题目的要求是，从根结点出发，到达某个叶结点的总权重和要等于给定的某个值，然后按顺序输出这条路径上的权重，那么就在深度搜索的过程中记录到达当前时的权重和以及路径，然后和给定值比较，第一：如果权重和小于给定值，就递归继续向下一层遍历，并传递到目前为止的权重和给下一层；第二：如果权重和等于给定值，再判断当前结点是否是叶结点，如果是就说明是符合题目要求的路径，根据记录的路径输出，如果不是，就结束向下遍历；第三，如果大于给定值，说明这条路径上没有符合要求的结果，停止遍历。</p>
+<p>数据结构上，我开始是用二维矩阵存储布尔值来模拟一棵树，如果第一维编号是第二维编号的父亲结点，就设置为true，如果不是就是false（初始化的时候用fill函数默认初始化为false）。另外用一个一维整型数组单独存储每个编号结点的权重。</p>
+<p>但是后来我发现题目有一个要求要实现起来就有点麻烦了。题目要求，一旦符合给定值的路径不唯一，就按照先出现的结点权重大的那一条路径优先来输出，而不能按随机找到的顺序输出。</p>
 <p>这里我想了一个办法，用vector数组来存储树，这样在输入每个结点的子结点的时候对他们按照权重进行排序，那么深度优先遍历的过程中就会优先遍历那些权重更大的结点，这样自然输出的顺序就符合题目要求。</p>
 <p>最后我按照设想写好了代码，并运行。</p>
 <p>However……</p>
@@ -494,7 +494,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <p class="site-author-name" itemprop="name">Christopher Hoy</p>
+              <p class="site-author-name" itemprop="name">Anyer Hoy</p>
               <p class="site-description motion-element" itemprop="description">不定期更新一些学习心得</p>
           </div>
 
@@ -615,7 +615,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Christopher Hoy</span>
+  <span class="author" itemprop="copyrightHolder">Anyer Hoy</span>
 
   
 </div>
