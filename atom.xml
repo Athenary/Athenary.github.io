@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://hoyyy.com/"/>
-  <updated>2019-08-11T12:31:57.804Z</updated>
+  <updated>2019-08-11T14:01:41.824Z</updated>
   <id>http://hoyyy.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PAT甲级 1059. Prime Factors</title>
+    <link href="http://hoyyy.com/2019/08/11/PAT%E7%94%B2%E7%BA%A7-1059-Prime-Factors/"/>
+    <id>http://hoyyy.com/2019/08/11/PAT甲级-1059-Prime-Factors/</id>
+    <published>2019-08-11T13:45:43.000Z</published>
+    <updated>2019-08-11T14:01:41.824Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这道题目是25分题，第二道第三道难度，需要有特定的数学知识作为背景。</p><h2 id="题目原文"><a href="#题目原文" class="headerlink" title="题目原文"></a>题目原文</h2><p>Given any positive integer N, you are supposed to find all of its prime factors, and write them in the format N = p​1^k1*p2^k2​*⋯*pm^km.</p><p>Input Specification:<br>Each input file contains one test case which gives a positive integer N in the range of long int.</p><p>Output Specification:<br>Factor N in the format N = p​1^k1*p2^k2*…*pm^km, where pi’s are prime factors of N in increasing order, and the exponent k​i is the number of pi – hence when there is only one p​i, ki is 1 and must NOT be printed out.</p><p>Sample Input:<br>97532468</p><p>Sample Output:<br>97532468=2^2*11*17*101*1291</p><h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>这题的前提是要知道质因数分解定律，而啥也不知道的我虽然一开始完全不知道，但是很快我就意识到这个题目要有结果则必须要有一个条件——所有的给定数一定能由有限个素数相乘得到，所以纯靠暴力算法是行不通的，于是放弃题目上网找资料。</p><p>果然，确实存在上述定理。</p><p>那么题目就是纯粹的已有算法的重现了，麻烦一点的可能是不能按网上的找到一个因子就输出，而是要先记录下来再按规定的格式输出。我这里用的map记录。</p><p>具体的算法是，i从2开始（如果N小于等于2就直接输出），用i除N，如果能整除，就说明i是一个素数因子，然后N /= i循环上述步骤，直到不能整除，就i++，继续。那么如果纯粹+1的操作不会导致出现非素数的因子吗？不会。由于从2开始，如果N里面还有2的倍数，那么肯定能再第一步里整除，无法进入到后面的+1步骤去，所以进入+1了说明之前能整除的i的倍数不会成为N的因子了，比如4，在i加到4之前，就已经分解为2*2了。之后的也类似。</p><h2 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// input</span></span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">int</span> N;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%ld"</span>, &amp;N);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// handle</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%ld="</span>, N);</span><br><span class="line">    <span class="keyword">if</span>(N &lt;= <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%ld"</span>, N);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; factors;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= N; i++) &#123;</span><br><span class="line">            <span class="keyword">while</span>(N % i == <span class="number">0</span>) &#123;</span><br><span class="line">                factors[i]++;</span><br><span class="line">                N /= i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> iter = factors.begin(); iter != factors.end(); iter++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(iter == factors.begin()) &#123;</span><br><span class="line">                <span class="keyword">if</span>((*iter).second &gt; <span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="built_in">cout</span> &lt;&lt; (*iter).first &lt;&lt; <span class="string">"^"</span> &lt;&lt; (*iter).second;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="built_in">cout</span> &lt;&lt; (*iter).first;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span>((*iter).second &gt; <span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="built_in">cout</span> &lt;&lt; <span class="string">"*"</span> &lt;&lt; (*iter).first &lt;&lt; <span class="string">"^"</span> &lt;&lt; (*iter).second;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="built_in">cout</span> &lt;&lt; <span class="string">"*"</span> &lt;&lt; (*iter).first;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(N != <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="string">"*"</span> &lt;&lt; N;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>这题不会做是真的没办法，完全是相关知识不知道，这里说明，第一，要广泛学习，尤其是算法以及其各种数学理论，尤其是数论相关；第二，像这题如果发现不给定某个规定，比如这里的质因数分解定理，就无法做下去的话，或者变得超乎寻常的复杂时，那就默认这个规定成立从而去做。当然这题如果冷静分析其实也可以通过设计算法得到同样的算法，只是知道背后的数学背景会更快更从容地设计算法。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;这道题目是25分题，第二道第三道难度，需要有特定的数学知识作为背景。&lt;/p&gt;
+&lt;h2 id=&quot;题目原文&quot;&gt;&lt;a href=&quot;#题目原文&quot; c
+      
+    
+    </summary>
+    
+      <category term="PAT" scheme="http://hoyyy.com/categories/PAT/"/>
+    
+    
+      <category term="C&amp;C++" scheme="http://hoyyy.com/tags/C-C/"/>
+    
+      <category term="Prime" scheme="http://hoyyy.com/tags/Prime/"/>
+    
+  </entry>
   
   <entry>
     <title>PAT甲级 1058. A+B in Hogwarts</title>
@@ -122,9 +150,9 @@
     
       <category term="C&amp;C++" scheme="http://hoyyy.com/tags/C-C/"/>
     
-      <category term="I/O" scheme="http://hoyyy.com/tags/I-O/"/>
-    
       <category term="string" scheme="http://hoyyy.com/tags/string/"/>
+    
+      <category term="I/O" scheme="http://hoyyy.com/tags/I-O/"/>
     
   </entry>
   
