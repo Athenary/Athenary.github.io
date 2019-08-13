@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://hoyyy.com/"/>
-  <updated>2019-08-11T14:01:41.824Z</updated>
+  <updated>2019-08-13T16:11:28.811Z</updated>
   <id>http://hoyyy.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>C标准库 cctype/ctype.h</title>
+    <link href="http://hoyyy.com/2019/08/14/C%E6%A0%87%E5%87%86%E5%BA%93-cctype-ctype-h/"/>
+    <id>http://hoyyy.com/2019/08/14/C标准库-cctype-ctype-h/</id>
+    <published>2019-08-13T16:02:36.000Z</published>
+    <updated>2019-08-13T16:11:28.811Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近用C语言的一些标准库发现也蛮好用，用起来也很方便，性能上也很棒。由于之前一直使用Cpp的标准库，但是有时候怕有些场合不支持Cpp的一些新特性，导致反复修改数据结构浪费很多时间。同时发现有些考试规定了用C语言，最后决定还是系统了解一下C的标准库，以后在不牺牲太大方便程度下尽量用C语言写题目。</p><p>cctype库是用来分类和转换单独的字符的函数库，对于出现处理字符串的问题能起到相当大的作用。该库总共<em>12</em>个可用函数。所有函数都是is开头，说明都是判断类的函数。</p><h2 id="1-isalnum"><a href="#1-isalnum" class="headerlink" title="1. isalnum()"></a>1. isalnum()</h2><p>参数：int c<br>返回值：int</p><p>在C语言中，char的技术实现是整数，所以参数的类型是整数，这并不影响把一个char传入函数后的处理。</p><p>这个函数是用来判断参数字符是不是数字或者字母（大写和小写都算），如果是，就会返回非零值，如果不是，就返回零。如果这个函数是返回true（非零值），那么isalpha()或者isdigit()其中有一个也会返回true值。</p><h2 id="2-isalpha"><a href="#2-isalpha" class="headerlink" title="2. isalpha()"></a>2. isalpha()</h2><p>参数：int c<br>返回值：int</p><p>这个函数用于判断参数字符是不是一个ASCII中的字母，如果是的话，在isupper()或者islower()中必有一个是返回true值。</p><h2 id="3-isblank"><a href="#3-isblank" class="headerlink" title="3. isblank()"></a>3. isblank()</h2><p>参数：int c<br>返回值：int</p><p>特别要注意的是这是C99或Cpp11的标准中的函数。这个函数用来判断是否是空白字符（要区别于空字符)，有两个字符会返回true值，空格字符和Tab（\t)字符都可以。</p><h2 id="4-iscntrl"><a href="#4-iscntrl" class="headerlink" title="4. iscntrl()"></a>4. iscntrl()</h2><p>参数：int c<br>返回值：int</p><p>这个函数是用来判断参数字符是否是一个控制字符。控制字符是那种不会在屏幕上打印出来的字符，比如0x00到0x08的字符，Tab字符（\t)，0x0A到0x0D的字符（\f, \v, \n, \r），以及0x0E到0x1F的字符，最后是0x7F（DEL）字符。如果是上述控制字符，就会返回true值。</p><h2 id="5-isdigit"><a href="#5-isdigit" class="headerlink" title="5. isdigit()"></a>5. isdigit()</h2><p>参数：int c<br>返回值：int</p><p>这个函数用来判断参数字符是否是一个十进制数字，即从0到9的数字。如过是上述数字就返回true值。</p><h2 id="6-isgraph"><a href="#6-isgraph" class="headerlink" title="6. isgraph()"></a>6. isgraph()</h2><p>参数：int c<br>返回值：int</p><p>这个函数用来判断参数字符是否是会在屏幕上绘制可视化输出的字符，是除了控制字符（iscntrl()函数判断返回true值）和空格字符外的所有字符，后面会提到isprint()函数，两者唯一的不同是，如果参数是空格字符，isgraph()会返回非true值，而isprint()会返回true值。</p><h2 id="7-islower"><a href="#7-islower" class="headerlink" title="7. islower()"></a>7. islower()</h2><p>参数：int c<br>返回值：int</p><p>这个函数是用来判断参数字符是否是小写的字母，即从a到z（0x61到0x7A）。如果是上述字符，就返回true值。</p><h2 id="8-isupper"><a href="#8-isupper" class="headerlink" title="8. isupper()"></a>8. isupper()</h2><p>参数：int c<br>返回值：int</p><p>这个函数是用来判断参数字符是否是大写的字母，即从A到Z（0x41到0x5A）。如果是上述字符，就返回true值。</p><h2 id="9-isprint"><a href="#9-isprint" class="headerlink" title="9. isprint()"></a>9. isprint()</h2><p>参数：int c<br>返回值：int</p><p>这个函数是用来判断参数字符是否是可打印的字符，是完全相反于iscntrl()函数的（虽然有点多余，但在可读性上面还是更好）。像之前所提到的，与isgraph()函数唯一不同的就是空格字符的对待，这个函数会返回true值（因为一个空格在屏幕上也会打印出来），而isgraph()函数不会返回true值。</p><h2 id="10-ispunct"><a href="#10-ispunct" class="headerlink" title="10. ispunct()"></a>10. ispunct()</h2><p>参数：int c<br>返回值：int</p><p>这个函数用来判断参数字符是否是一个标点（punctuation）字符，而这个里面的字符范围是，在isgraph()函数的范围内，但是排除在isalnum()函数之外的所有字符，即所有可视字符中除了字母和数字的所有字符。</p><h2 id="11-isspace"><a href="#11-isspace" class="headerlink" title="11. isspace()"></a>11. isspace()</h2><p>参数：int c<br>返回值：int</p><p>这个函数用来判断参数字符是否是white-space字符，它包含了isblank()判断的空格字符和Tab字符，同时还有另外四个控制字符（\n, \v, \f, \r）。如果是上述六个字符，就返回true值。</p><h2 id="12-isxdigit"><a href="#12-isxdigit" class="headerlink" title="12. isxdigit()"></a>12. isxdigit()</h2><p>参数：int c<br>返回值：int</p><p>这个函数是用来判别是否是十六进制的表示字符，包括0到9，a到e，A到E。如果是上述字符就返回true值。</p><h2 id="返回真值的范围图"><a href="#返回真值的范围图" class="headerlink" title="返回真值的范围图"></a>返回真值的范围图</h2><p>引用自<a href="http://www.cplusplus.com/reference/cctype/" target="_blank" rel="noopener">http://www.cplusplus.com/reference/cctype/</a><br>（x表示返回真值的对应字符）<br><img src="img.png" alt></p><h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>严格来讲每个函数都可以用直接的不等式判断来实现，但是使用这些函数可以增加代码的可读性，已经减少出错的可能性，建议以后单独处理字符的时候使用这个函数库。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;最近用C语言的一些标准库发现也蛮好用，用起来也很方便，性能上也很棒。由于之前一直使用Cpp的标准库，但是有时候怕有些场合不支持Cpp的一些新
+      
+    
+    </summary>
+    
+      <category term="C&amp;C++ Language" scheme="http://hoyyy.com/categories/C-C-Language/"/>
+    
+    
+      <category term="C&amp;C++" scheme="http://hoyyy.com/tags/C-C/"/>
+    
+      <category term="string" scheme="http://hoyyy.com/tags/string/"/>
+    
+  </entry>
   
   <entry>
     <title>PAT甲级 1059. Prime Factors</title>
@@ -262,9 +289,9 @@
       <category term="Intelligent Optimization Algorithms" scheme="http://hoyyy.com/categories/Intelligent-Optimization-Algorithms/"/>
     
     
-      <category term="Genetic Algorithm" scheme="http://hoyyy.com/tags/Genetic-Algorithm/"/>
-    
       <category term="Python" scheme="http://hoyyy.com/tags/Python/"/>
+    
+      <category term="Genetic Algorithm" scheme="http://hoyyy.com/tags/Genetic-Algorithm/"/>
     
       <category term="离散优化问题" scheme="http://hoyyy.com/tags/%E7%A6%BB%E6%95%A3%E4%BC%98%E5%8C%96%E9%97%AE%E9%A2%98/"/>
     

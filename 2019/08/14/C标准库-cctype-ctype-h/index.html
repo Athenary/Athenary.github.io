@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="C&C++,Decimal,">
+  <meta name="keywords" content="C&C++,string,">
 
 
 
@@ -81,18 +81,20 @@
 
 
 
-<meta name="description" content="前言这道题是典型的自定义进制计算，20分值题，属于第一道题难度，不应该超过20分钟。 题目原文If you are a fan of Harry Potter, you would know the world of magic has its own currency system – as Hagrid explained it to Harry, “Seventeen silver Sick">
-<meta name="keywords" content="C&amp;C++,Decimal">
+<meta name="description" content="前言最近用C语言的一些标准库发现也蛮好用，用起来也很方便，性能上也很棒。由于之前一直使用Cpp的标准库，但是有时候怕有些场合不支持Cpp的一些新特性，导致反复修改数据结构浪费很多时间。同时发现有些考试规定了用C语言，最后决定还是系统了解一下C的标准库，以后在不牺牲太大方便程度下尽量用C语言写题目。 cctype库是用来分类和转换单独的字符的函数库，对于出现处理字符串的问题能起到相当大的作用。该库总">
+<meta name="keywords" content="C&amp;C++,string">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PAT甲级 1058. A+B in Hogwarts">
-<meta property="og:url" content="http://hoyyy.com/2019/08/11/PAT甲级-1058-A-B-in-Hogwarts/index.html">
+<meta property="og:title" content="C标准库 cctype&#x2F;ctype.h">
+<meta property="og:url" content="http://hoyyy.com/2019/08/14/C标准库-cctype-ctype-h/index.html">
 <meta property="og:site_name" content="小贺今天有认真学习吗">
-<meta property="og:description" content="前言这道题是典型的自定义进制计算，20分值题，属于第一道题难度，不应该超过20分钟。 题目原文If you are a fan of Harry Potter, you would know the world of magic has its own currency system – as Hagrid explained it to Harry, “Seventeen silver Sick">
+<meta property="og:description" content="前言最近用C语言的一些标准库发现也蛮好用，用起来也很方便，性能上也很棒。由于之前一直使用Cpp的标准库，但是有时候怕有些场合不支持Cpp的一些新特性，导致反复修改数据结构浪费很多时间。同时发现有些考试规定了用C语言，最后决定还是系统了解一下C的标准库，以后在不牺牲太大方便程度下尽量用C语言写题目。 cctype库是用来分类和转换单独的字符的函数库，对于出现处理字符串的问题能起到相当大的作用。该库总">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-11T12:31:57.804Z">
+<meta property="og:image" content="http://hoyyy.com/2019/08/14/C标准库-cctype-ctype-h/img.png">
+<meta property="og:updated_time" content="2019-08-13T16:11:28.811Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PAT甲级 1058. A+B in Hogwarts">
-<meta name="twitter:description" content="前言这道题是典型的自定义进制计算，20分值题，属于第一道题难度，不应该超过20分钟。 题目原文If you are a fan of Harry Potter, you would know the world of magic has its own currency system – as Hagrid explained it to Harry, “Seventeen silver Sick">
+<meta name="twitter:title" content="C标准库 cctype&#x2F;ctype.h">
+<meta name="twitter:description" content="前言最近用C语言的一些标准库发现也蛮好用，用起来也很方便，性能上也很棒。由于之前一直使用Cpp的标准库，但是有时候怕有些场合不支持Cpp的一些新特性，导致反复修改数据结构浪费很多时间。同时发现有些考试规定了用C语言，最后决定还是系统了解一下C的标准库，以后在不牺牲太大方便程度下尽量用C语言写题目。 cctype库是用来分类和转换单独的字符的函数库，对于出现处理字符串的问题能起到相当大的作用。该库总">
+<meta name="twitter:image" content="http://hoyyy.com/2019/08/14/C标准库-cctype-ctype-h/img.png">
 
 
 
@@ -122,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://hoyyy.com/2019/08/11/PAT甲级-1058-A-B-in-Hogwarts/">
+  <link rel="canonical" href="http://hoyyy.com/2019/08/14/C标准库-cctype-ctype-h/">
 
 
 
 
 
-  <title>PAT甲级 1058. A+B in Hogwarts | 小贺今天有认真学习吗</title>
+  <title>C标准库 cctype/ctype.h | 小贺今天有认真学习吗</title>
   
 
 
@@ -265,7 +267,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://hoyyy.com/2019/08/11/PAT甲级-1058-A-B-in-Hogwarts/">
+    <link itemprop="mainEntityOfPage" href="http://hoyyy.com/2019/08/14/C标准库-cctype-ctype-h/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yaron Ho">
@@ -282,7 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">PAT甲级 1058. A+B in Hogwarts</h1>
+          <h1 class="post-title" itemprop="name headline">C标准库 cctype/ctype.h</h1>
         
 
         <div class="post-meta">
@@ -294,8 +296,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-11T20:23:00+08:00">
-                2019-08-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-14T00:02:36+08:00">
+                2019-08-14
               </time>
             
 
@@ -317,8 +319,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/PAT/" itemprop="url" rel="index">
-                    <span itemprop="name">PAT</span>
+                  <a href="/categories/C-C-Language/" itemprop="url" rel="index">
+                    <span itemprop="name">C&C++ Language</span>
                   </a>
                 </span>
 
@@ -359,16 +361,35 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这道题是典型的自定义进制计算，20分值题，属于第一道题难度，不应该超过20分钟。</p>
-<h2 id="题目原文"><a href="#题目原文" class="headerlink" title="题目原文"></a>题目原文</h2><p>If you are a fan of Harry Potter, you would know the world of magic has its own currency system – as Hagrid explained it to Harry, “Seventeen silver Sickles to a Galleon and twenty-nine Knuts to a Sickle, it’s easy enough.” Your job is to write a program to compute A+B where A and B are given in the standard form of Galleon.Sickle.Knut (Galleon is an integer in [0,10^7], Sickle is an integer in [0, 17), and Knut is an integer in [0, 29)).</p>
-<p>Input Specification:<br>Each input file contains one test case which occupies a line with A and B in the standard form, separated by one space.</p>
-<p>Output Specification:<br>For each test case you should output the sum of A and B in one line, with the same format as the input.</p>
-<p>Sample Input:<br>3.2.1 10.16.27</p>
-<p>Sample Output:<br>14.1.28</p>
-<h2 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h2><p>有三个位，每个位的进制不同，最低位是29进制，中间位是17进制，最高位则范围在[0, 10^7]。这里还好我之前熟悉了一下sacnf()的使用，不然按以前的脑回路，因为输入中夹杂有小数点，我会用getchar()来处理输入然后转数值类型，要是真这样估计要浪费很多时间。而这里就只需要按照scanf()的输入规则，在每个说明符间写一个小数点即可按照题目要求读入。</p>
-<p>然后计算过程是，从低位开始加，有进位就记录，最后得到最终结果。</p>
-<h2 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// input</span></span><br><span class="line">    <span class="keyword">int</span> AG, AS, AK, BG, BS, BK;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d.%d.%d %d.%d.%d"</span>, &amp;AG, &amp;AS, &amp;AK, &amp;BG, &amp;BS, &amp;BK);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// handle</span></span><br><span class="line">    <span class="keyword">int</span> G, S, K;</span><br><span class="line">    <span class="keyword">int</span> rS = <span class="number">0</span>, rK = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(AK + BK &gt;= <span class="number">29</span>) &#123;</span><br><span class="line">        K = AK + BK - <span class="number">29</span>;</span><br><span class="line">        rK++;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        K = AK + BK;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(AS + BS + rK &gt;= <span class="number">17</span>) &#123;</span><br><span class="line">        S = AS + BS + rK - <span class="number">17</span>;</span><br><span class="line">        rS++;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        S = AS + BS + rK;</span><br><span class="line">    &#125;</span><br><span class="line">    G = AG + BG + rS;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// output</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%d.%d.%d"</span>, G, S, K);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>这道题大概用了11分钟，庆幸于之前复习了scanf()的使用，其他的可讲之处不多。</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近用C语言的一些标准库发现也蛮好用，用起来也很方便，性能上也很棒。由于之前一直使用Cpp的标准库，但是有时候怕有些场合不支持Cpp的一些新特性，导致反复修改数据结构浪费很多时间。同时发现有些考试规定了用C语言，最后决定还是系统了解一下C的标准库，以后在不牺牲太大方便程度下尽量用C语言写题目。</p>
+<p>cctype库是用来分类和转换单独的字符的函数库，对于出现处理字符串的问题能起到相当大的作用。该库总共<em>12</em>个可用函数。所有函数都是is开头，说明都是判断类的函数。</p>
+<h2 id="1-isalnum"><a href="#1-isalnum" class="headerlink" title="1. isalnum()"></a>1. isalnum()</h2><p>参数：int c<br>返回值：int</p>
+<p>在C语言中，char的技术实现是整数，所以参数的类型是整数，这并不影响把一个char传入函数后的处理。</p>
+<p>这个函数是用来判断参数字符是不是数字或者字母（大写和小写都算），如果是，就会返回非零值，如果不是，就返回零。如果这个函数是返回true（非零值），那么isalpha()或者isdigit()其中有一个也会返回true值。</p>
+<h2 id="2-isalpha"><a href="#2-isalpha" class="headerlink" title="2. isalpha()"></a>2. isalpha()</h2><p>参数：int c<br>返回值：int</p>
+<p>这个函数用于判断参数字符是不是一个ASCII中的字母，如果是的话，在isupper()或者islower()中必有一个是返回true值。</p>
+<h2 id="3-isblank"><a href="#3-isblank" class="headerlink" title="3. isblank()"></a>3. isblank()</h2><p>参数：int c<br>返回值：int</p>
+<p>特别要注意的是这是C99或Cpp11的标准中的函数。这个函数用来判断是否是空白字符（要区别于空字符)，有两个字符会返回true值，空格字符和Tab（\t)字符都可以。</p>
+<h2 id="4-iscntrl"><a href="#4-iscntrl" class="headerlink" title="4. iscntrl()"></a>4. iscntrl()</h2><p>参数：int c<br>返回值：int</p>
+<p>这个函数是用来判断参数字符是否是一个控制字符。控制字符是那种不会在屏幕上打印出来的字符，比如0x00到0x08的字符，Tab字符（\t)，0x0A到0x0D的字符（\f, \v, \n, \r），以及0x0E到0x1F的字符，最后是0x7F（DEL）字符。如果是上述控制字符，就会返回true值。</p>
+<h2 id="5-isdigit"><a href="#5-isdigit" class="headerlink" title="5. isdigit()"></a>5. isdigit()</h2><p>参数：int c<br>返回值：int</p>
+<p>这个函数用来判断参数字符是否是一个十进制数字，即从0到9的数字。如过是上述数字就返回true值。</p>
+<h2 id="6-isgraph"><a href="#6-isgraph" class="headerlink" title="6. isgraph()"></a>6. isgraph()</h2><p>参数：int c<br>返回值：int</p>
+<p>这个函数用来判断参数字符是否是会在屏幕上绘制可视化输出的字符，是除了控制字符（iscntrl()函数判断返回true值）和空格字符外的所有字符，后面会提到isprint()函数，两者唯一的不同是，如果参数是空格字符，isgraph()会返回非true值，而isprint()会返回true值。</p>
+<h2 id="7-islower"><a href="#7-islower" class="headerlink" title="7. islower()"></a>7. islower()</h2><p>参数：int c<br>返回值：int</p>
+<p>这个函数是用来判断参数字符是否是小写的字母，即从a到z（0x61到0x7A）。如果是上述字符，就返回true值。</p>
+<h2 id="8-isupper"><a href="#8-isupper" class="headerlink" title="8. isupper()"></a>8. isupper()</h2><p>参数：int c<br>返回值：int</p>
+<p>这个函数是用来判断参数字符是否是大写的字母，即从A到Z（0x41到0x5A）。如果是上述字符，就返回true值。</p>
+<h2 id="9-isprint"><a href="#9-isprint" class="headerlink" title="9. isprint()"></a>9. isprint()</h2><p>参数：int c<br>返回值：int</p>
+<p>这个函数是用来判断参数字符是否是可打印的字符，是完全相反于iscntrl()函数的（虽然有点多余，但在可读性上面还是更好）。像之前所提到的，与isgraph()函数唯一不同的就是空格字符的对待，这个函数会返回true值（因为一个空格在屏幕上也会打印出来），而isgraph()函数不会返回true值。</p>
+<h2 id="10-ispunct"><a href="#10-ispunct" class="headerlink" title="10. ispunct()"></a>10. ispunct()</h2><p>参数：int c<br>返回值：int</p>
+<p>这个函数用来判断参数字符是否是一个标点（punctuation）字符，而这个里面的字符范围是，在isgraph()函数的范围内，但是排除在isalnum()函数之外的所有字符，即所有可视字符中除了字母和数字的所有字符。</p>
+<h2 id="11-isspace"><a href="#11-isspace" class="headerlink" title="11. isspace()"></a>11. isspace()</h2><p>参数：int c<br>返回值：int</p>
+<p>这个函数用来判断参数字符是否是white-space字符，它包含了isblank()判断的空格字符和Tab字符，同时还有另外四个控制字符（\n, \v, \f, \r）。如果是上述六个字符，就返回true值。</p>
+<h2 id="12-isxdigit"><a href="#12-isxdigit" class="headerlink" title="12. isxdigit()"></a>12. isxdigit()</h2><p>参数：int c<br>返回值：int</p>
+<p>这个函数是用来判别是否是十六进制的表示字符，包括0到9，a到e，A到E。如果是上述字符就返回true值。</p>
+<h2 id="返回真值的范围图"><a href="#返回真值的范围图" class="headerlink" title="返回真值的范围图"></a>返回真值的范围图</h2><p>引用自<a href="http://www.cplusplus.com/reference/cctype/" target="_blank" rel="noopener">http://www.cplusplus.com/reference/cctype/</a><br>（x表示返回真值的对应字符）<br><img src="img.png" alt></p>
+<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>严格来讲每个函数都可以用直接的不等式判断来实现，但是使用这些函数可以增加代码的可读性，已经减少出错的可能性，建议以后单独处理字符的时候使用这个函数库。</p>
 
       
     </div>
@@ -388,7 +409,7 @@
           
             <a href="/tags/C-C/" rel="tag"># C&C++</a>
           
-            <a href="/tags/Decimal/" rel="tag"># Decimal</a>
+            <a href="/tags/string/" rel="tag"># string</a>
           
         </div>
       
@@ -401,8 +422,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/10/PAT甲级-1054.-The-Dominant-Color/" rel="next" title="PAT甲级 1054. The Dominant Color">
-                <i class="fa fa-chevron-left"></i> PAT甲级 1054. The Dominant Color
+              <a href="/2019/08/11/PAT甲级-1059-Prime-Factors/" rel="next" title="PAT甲级 1059. Prime Factors">
+                <i class="fa fa-chevron-left"></i> PAT甲级 1059. Prime Factors
               </a>
             
           </div>
@@ -410,10 +431,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/08/11/PAT甲级-1059-Prime-Factors/" rel="prev" title="PAT甲级 1059. Prime Factors">
-                PAT甲级 1059. Prime Factors <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -576,7 +593,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目原文"><span class="nav-number">2.</span> <span class="nav-text">题目原文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决思路"><span class="nav-number">3.</span> <span class="nav-text">解决思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源代码"><span class="nav-number">4.</span> <span class="nav-text">源代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">5.</span> <span class="nav-text">后记</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-isalnum"><span class="nav-number">2.</span> <span class="nav-text">1. isalnum()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-isalpha"><span class="nav-number">3.</span> <span class="nav-text">2. isalpha()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-isblank"><span class="nav-number">4.</span> <span class="nav-text">3. isblank()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-iscntrl"><span class="nav-number">5.</span> <span class="nav-text">4. iscntrl()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-isdigit"><span class="nav-number">6.</span> <span class="nav-text">5. isdigit()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-isgraph"><span class="nav-number">7.</span> <span class="nav-text">6. isgraph()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-islower"><span class="nav-number">8.</span> <span class="nav-text">7. islower()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-isupper"><span class="nav-number">9.</span> <span class="nav-text">8. isupper()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-isprint"><span class="nav-number">10.</span> <span class="nav-text">9. isprint()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-ispunct"><span class="nav-number">11.</span> <span class="nav-text">10. ispunct()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-isspace"><span class="nav-number">12.</span> <span class="nav-text">11. isspace()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-isxdigit"><span class="nav-number">13.</span> <span class="nav-text">12. isxdigit()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#返回真值的范围图"><span class="nav-number">14.</span> <span class="nav-text">返回真值的范围图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">15.</span> <span class="nav-text">后记</span></a></li></ol></div>
             
 
           </div>
