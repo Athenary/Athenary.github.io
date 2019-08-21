@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="前言这道题目是25分题，第二道第三道难度，需要有特定的数学知识作为背景。 题目原文Given any positive integer N, you are supposed to find all of its prime factors, and write them in the format N = p​1^k1*p2^k2​*⋯*pm^km. Input Specification:Ea">
+<meta name="description" content="前言这道题是跟素数相关的，我发现PAT甲级第一题很喜欢考素数啊，出现过很多次了，不过都没办法难…… 题目原文In July 2004, Google posted on a giant billboard along Highway 101 in Silicon Valley (shown in the picture below) for recruitment. The content is">
 <meta name="keywords" content="C&amp;C++,Prime">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PAT甲级 1059. Prime Factors">
-<meta property="og:url" content="http://hoyyy.com/2019/08/11/PAT甲级-1059-Prime-Factors/index.html">
+<meta property="og:title" content="PAT甲级 1152. Google Recruitment">
+<meta property="og:url" content="http://hoyyy.com/2019/08/21/PAT甲级-1152-Google-Recruitment/index.html">
 <meta property="og:site_name" content="小贺今天有认真学习吗">
-<meta property="og:description" content="前言这道题目是25分题，第二道第三道难度，需要有特定的数学知识作为背景。 题目原文Given any positive integer N, you are supposed to find all of its prime factors, and write them in the format N = p​1^k1*p2^k2​*⋯*pm^km. Input Specification:Ea">
+<meta property="og:description" content="前言这道题是跟素数相关的，我发现PAT甲级第一题很喜欢考素数啊，出现过很多次了，不过都没办法难…… 题目原文In July 2004, Google posted on a giant billboard along Highway 101 in Silicon Valley (shown in the picture below) for recruitment. The content is">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-21T15:01:59.212Z">
+<meta property="og:updated_time" content="2019-08-21T14:56:44.958Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PAT甲级 1059. Prime Factors">
-<meta name="twitter:description" content="前言这道题目是25分题，第二道第三道难度，需要有特定的数学知识作为背景。 题目原文Given any positive integer N, you are supposed to find all of its prime factors, and write them in the format N = p​1^k1*p2^k2​*⋯*pm^km. Input Specification:Ea">
+<meta name="twitter:title" content="PAT甲级 1152. Google Recruitment">
+<meta name="twitter:description" content="前言这道题是跟素数相关的，我发现PAT甲级第一题很喜欢考素数啊，出现过很多次了，不过都没办法难…… 题目原文In July 2004, Google posted on a giant billboard along Highway 101 in Silicon Valley (shown in the picture below) for recruitment. The content is">
 
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://hoyyy.com/2019/08/11/PAT甲级-1059-Prime-Factors/">
+  <link rel="canonical" href="http://hoyyy.com/2019/08/21/PAT甲级-1152-Google-Recruitment/">
 
 
 
 
 
-  <title>PAT甲级 1059. Prime Factors | 小贺今天有认真学习吗</title>
+  <title>PAT甲级 1152. Google Recruitment | 小贺今天有认真学习吗</title>
   
 
 
@@ -265,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://hoyyy.com/2019/08/11/PAT甲级-1059-Prime-Factors/">
+    <link itemprop="mainEntityOfPage" href="http://hoyyy.com/2019/08/21/PAT甲级-1152-Google-Recruitment/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yaron Ho">
@@ -282,7 +282,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">PAT甲级 1059. Prime Factors</h1>
+          <h1 class="post-title" itemprop="name headline">PAT甲级 1152. Google Recruitment</h1>
         
 
         <div class="post-meta">
@@ -294,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-11T21:45:43+08:00">
-                2019-08-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-21T22:47:11+08:00">
+                2019-08-21
               </time>
             
 
@@ -359,18 +359,19 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这道题目是25分题，第二道第三道难度，需要有特定的数学知识作为背景。</p>
-<h2 id="题目原文"><a href="#题目原文" class="headerlink" title="题目原文"></a>题目原文</h2><p>Given any positive integer N, you are supposed to find all of its prime factors, and write them in the format N = p​1^k1*p2^k2​*⋯*pm^km.</p>
-<p>Input Specification:<br>Each input file contains one test case which gives a positive integer N in the range of long int.</p>
-<p>Output Specification:<br>Factor N in the format N = p​1^k1*p2^k2*…*pm^km, where pi’s are prime factors of N in increasing order, and the exponent k​i is the number of pi – hence when there is only one p​i, ki is 1 and must NOT be printed out.</p>
-<p>Sample Input:<br>97532468</p>
-<p>Sample Output:<br>97532468=2^2*11*17*101*1291</p>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>这题的前提是要知道质因数分解定律，而啥也不知道的我虽然一开始完全不知道，但是很快我就意识到这个题目要有结果则必须要有一个条件——所有的给定数一定能由有限个素数相乘得到，所以纯靠暴力算法是行不通的，于是放弃题目上网找资料。</p>
-<p>果然，确实存在上述定理。</p>
-<p>那么题目就是纯粹的已有算法的重现了，麻烦一点的可能是不能按网上的找到一个因子就输出，而是要先记录下来再按规定的格式输出。我这里用的map记录。</p>
-<p>具体的算法是，i从2开始（如果N小于等于2就直接输出），用i除N，如果能整除，就说明i是一个素数因子，然后N /= i循环上述步骤，直到不能整除，就i++，继续。那么如果纯粹+1的操作不会导致出现非素数的因子吗？不会。由于从2开始，如果N里面还有2的倍数，那么肯定能再第一步里整除，无法进入到后面的+1步骤去，所以进入+1了说明之前能整除的i的倍数不会成为N的因子了，比如4，在i加到4之前，就已经分解为2*2了。之后的也类似。</p>
-<h2 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;map&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// input</span></span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">int</span> N;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%ld"</span>, &amp;N);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// handle</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%ld="</span>, N);</span><br><span class="line">    <span class="keyword">if</span>(N &lt;= <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%ld"</span>, N);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; factors;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= N; i++) &#123;</span><br><span class="line">            <span class="keyword">while</span>(N % i == <span class="number">0</span>) &#123;</span><br><span class="line">                factors[i]++;</span><br><span class="line">                N /= i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> iter = factors.begin(); iter != factors.end(); iter++) &#123;</span><br><span class="line">            <span class="keyword">if</span>(iter == factors.begin()) &#123;</span><br><span class="line">                <span class="keyword">if</span>((*iter).second &gt; <span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="built_in">cout</span> &lt;&lt; (*iter).first &lt;&lt; <span class="string">"^"</span> &lt;&lt; (*iter).second;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="built_in">cout</span> &lt;&lt; (*iter).first;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span>((*iter).second &gt; <span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="built_in">cout</span> &lt;&lt; <span class="string">"*"</span> &lt;&lt; (*iter).first &lt;&lt; <span class="string">"^"</span> &lt;&lt; (*iter).second;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="built_in">cout</span> &lt;&lt; <span class="string">"*"</span> &lt;&lt; (*iter).first;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(N != <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="built_in">cout</span> &lt;&lt; <span class="string">"*"</span> &lt;&lt; N;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h2><p>这题不会做是真的没办法，完全是相关知识不知道，这里说明，第一，要广泛学习，尤其是算法以及其各种数学理论，尤其是数论相关；第二，像这题如果发现不给定某个规定，比如这里的质因数分解定理，就无法做下去的话，或者变得超乎寻常的复杂时，那就默认这个规定成立从而去做。当然这题如果冷静分析其实也可以通过设计算法得到同样的算法，只是知道背后的数学背景会更快更从容地设计算法。</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这道题是跟素数相关的，我发现PAT甲级第一题很喜欢考素数啊，出现过很多次了，不过都没办法难……</p>
+<h2 id="题目原文"><a href="#题目原文" class="headerlink" title="题目原文"></a>题目原文</h2><p>In July 2004, Google posted on a giant billboard along Highway 101 in Silicon Valley (shown in the picture below) for recruitment. The content is super-simple, a URL consisting of the first 10-digit prime found in consecutive digits of the natural constant e. The person who could find this prime number could go to the next step in Google’s hiring process by visiting this website.</p>
+<p>The natural constant e is a well known transcendental number（超越数）. The first several digits are: e = 2.718281828459045235360287471352662497757247093699959574966967627724076630353547594571382178525166427427466391932003059921… where the 10 digits in bold are the answer to Google’s question.</p>
+<p>Now you are asked to solve a more general problem: find the first K-digit prime in consecutive digits of any given L-digit number.</p>
+<p>Input Specification:<br>Each input file contains one test case. Each case first gives in a line two positive integers: L (≤ 1,000) and K (\&lt; 10), which are the numbers of digits of the given number and the prime to be found, respectively. Then the L-digit number N is given in the next line.</p>
+<p>Output Specification:<br>For each test case, print in a line the first K-digit prime in consecutive digits of N. If such a number does not exist, output 404 instead. Note: the leading zeroes must also be counted as part of the K digits. For example, to find the 4-digit prime in 200236, 0023 is a solution. However the first digit 2 must not be treated as a solution 0002 since the leading zeroes are not in the original number.</p>
+<p>Sample Input 1:<br>20 5<br>23654987725541023819</p>
+<p>Sample Output 1:<br>49877</p>
+<p>Sample Input 2:<br>10 3<br>2468024680</p>
+<p>Sample Output 2:<br>404</p>
+<h2 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h2><p>给定一个L位的数字，找到一个K位的素数。<br>每K位为一个单位进行遍历，判断数字是否是素数，是则输出，不是则继续，最终没找到就输出404。需要注意的就是输入数字是个字符串大数，要局部转换成K位数字进行计算，然后使用经典素数判断算法即可。</p>
+<h2 id="源代码"><a href="#源代码" class="headerlink" title="源代码"></a>源代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isPrime</span><span class="params">(<span class="built_in">string</span> str)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> str_int = stoi(str);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= <span class="built_in">pow</span>(str_int, <span class="number">0.5</span>); i++) &#123;</span><br><span class="line">        <span class="keyword">if</span>(str_int % i == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> L, K;</span><br><span class="line">    <span class="built_in">string</span> input;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; L &gt;&gt; K &gt;&gt; input;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(input.length() &lt; K) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"404"</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= input.length() - K; i++) &#123;</span><br><span class="line">            <span class="built_in">string</span> sub = input.substr(i, K);</span><br><span class="line">            <span class="keyword">if</span>(isPrime(sub)) &#123;</span><br><span class="line">                <span class="built_in">cout</span> &lt;&lt; sub;</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"404"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>## </p>
 
       
     </div>
@@ -403,8 +404,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/08/11/PAT甲级-1058-A-B-in-Hogwarts/" rel="next" title="PAT甲级 1058. A+B in Hogwarts">
-                <i class="fa fa-chevron-left"></i> PAT甲级 1058. A+B in Hogwarts
+              <a href="/2019/08/19/计算机科学基础-线性表/" rel="next" title="计算机科学基础 线性表">
+                <i class="fa fa-chevron-left"></i> 计算机科学基础 线性表
               </a>
             
           </div>
@@ -413,8 +414,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/08/14/C标准库-cctype-ctype-h/" rel="prev" title="C标准库 cctype/ctype.h">
-                C标准库 cctype/ctype.h <i class="fa fa-chevron-right"></i>
+              <a href="/2019/08/21/PAT甲级-1153-Decode-Registration-Card-of-PAT/" rel="prev" title="PAT甲级 1153. Decode Registration Card of PAT">
+                PAT甲级 1153. Decode Registration Card of PAT <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -578,7 +579,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目原文"><span class="nav-number">2.</span> <span class="nav-text">题目原文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解题思路"><span class="nav-number">3.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源代码"><span class="nav-number">4.</span> <span class="nav-text">源代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后记"><span class="nav-number">5.</span> <span class="nav-text">后记</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题目原文"><span class="nav-number">2.</span> <span class="nav-text">题目原文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决思路"><span class="nav-number">3.</span> <span class="nav-text">解决思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源代码"><span class="nav-number">4.</span> <span class="nav-text">源代码</span></a></li></ol></div>
             
 
           </div>
